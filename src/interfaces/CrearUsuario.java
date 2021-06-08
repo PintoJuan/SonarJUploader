@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
@@ -57,6 +58,7 @@ public class CrearUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public CrearUsuario() {
+		setTitle("Sonar JUploader");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 245);
 		contentPane = new JPanel();
@@ -110,9 +112,32 @@ public class CrearUsuario extends JFrame {
 					SQLiteDataSource ds = new SQLiteDataSource();
 					ds.setUrl("jdbc:sqlite:SonarJUploader.db");
 					Connection conn = ds.getConnection();
+					String query =  "SELECT * FROM usuarios";
+					Statement stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery( query );
+					
+					while ( rs.next() ) {
+					    String nombre = rs.getString( "NOMBRE" );
+
+					    if (txtNombre.getText().equals(nombre)) {
+					    	JOptionPane.showMessageDialog(null, "El usuario ya existe.");
+					    	conn.close();
+					    	return;
+					    }
+					}
+					conn.close();
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Error al iniciar sesión.");
+				}
+				
+				try {
+					SQLiteDataSource ds = new SQLiteDataSource();
+					ds.setUrl("jdbc:sqlite:SonarJUploader.db");
+					Connection conn = ds.getConnection();
 					String query = "INSERT INTO usuarios ( NOMBRE, PASSWORD ) VALUES ( '"+txtNombre.getText()+"', '"+txtContraseña.getText()+"' )";
 					Statement stmt = conn.createStatement();
 					int rv = stmt.executeUpdate( query );
+					conn.close();
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(null, "No se pudo crear el usuario.");
 				}

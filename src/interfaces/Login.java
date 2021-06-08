@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import org.sqlite.SQLiteDataSource;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -17,6 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
@@ -24,9 +27,9 @@ import java.awt.event.ActionEvent;
 public class Login extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	static Login frame = new Login();
+	private JTextField txtNombre;
+	private JTextField txtContraseña;
+	static Login frame;
 
 	/**
 	 * Launch the application.
@@ -50,15 +53,16 @@ public class Login extends JFrame {
 							"PASSWORD TEXT NOT NULL )";
 			Statement stmt = conn.createStatement();
 			int rv = stmt.executeUpdate( query );
+			conn.close();
 		} catch (SQLException e1) {
-			e1.printStackTrace();
-			System.out.println( "Error" );
+			JOptionPane.showMessageDialog(null, "Existe un error con la base de datos.");
 		}
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					//Login frame = new Login();
+					frame = new Login();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -92,31 +96,71 @@ public class Login extends JFrame {
 		lblNombreUsuario.setBounds(39, 88, 126, 16);
 		contentPane.add(lblNombreUsuario);
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setColumns(10);
-		textField.setBounds(162, 83, 197, 28);
-		contentPane.add(textField);
+		txtNombre = new JTextField();
+		txtNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNombre.setColumns(10);
+		txtNombre.setBounds(162, 83, 197, 28);
+		contentPane.add(txtNombre);
 		
 		JLabel lblContraseña = new JLabel("Contrase\u00F1a:");
 		lblContraseña.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblContraseña.setBounds(85, 127, 80, 16);
 		contentPane.add(lblContraseña);
 		
-		textField_1 = new JTextField();
-		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_1.setColumns(10);
-		textField_1.setBounds(162, 122, 197, 28);
-		contentPane.add(textField_1);
+		txtContraseña = new JTextField();
+		txtContraseña.setHorizontalAlignment(SwingConstants.CENTER);
+		txtContraseña.setColumns(10);
+		txtContraseña.setBounds(162, 122, 197, 28);
+		contentPane.add(txtContraseña);
 		
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Principal.main(null);
-				dispose();
+				
+				if (txtNombre.getText().isEmpty() == true) {
+					JOptionPane.showMessageDialog(null, "Debe ingresar un nombre de usuario.");
+					return;
+				}
+				
+				if (txtContraseña.getText().isEmpty() == true) {
+					JOptionPane.showMessageDialog(null, "Debe ingresar una contraseña.");
+					return;
+				}
+				
+				try {
+					SQLiteDataSource ds = new SQLiteDataSource();
+					ds.setUrl("jdbc:sqlite:SonarJUploader.db");
+					Connection conn = ds.getConnection();
+					String query =  "SELECT * FROM usuarios";
+					Statement stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery( query );
+					
+					while ( rs.next() ) {
+					    int id = rs.getInt( "ID" );
+					    String nombre = rs.getString( "NOMBRE" );
+					    String contraseña = rs.getString( "PASSWORD" );
+
+					    if (txtNombre.getText().equals(nombre) && txtContraseña.getText().equals(contraseña)) {
+					    	String[] idnombre = new String[2];
+					    	idnombre[0] = Integer.toString(id);
+					    	idnombre[1] = nombre;
+					    	Principal.main(idnombre);
+							dispose();
+							break;
+					    }
+					}
+					conn.close();
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Error al iniciar sesión.");
+				}
+				
+				if (frame.isShowing()) {
+					JOptionPane.showMessageDialog(null, "Usuario/Contraseña erróneo o inexistente.");
+				}
+				
 			}
 		});
-		btnIngresar.setBounds(203, 161, 99, 30);
+		btnIngresar.setBounds(204, 161, 99, 30);
 		contentPane.add(btnIngresar);
 		
 		JButton btnCerrar = new JButton("Cerrar");
@@ -135,7 +179,7 @@ public class Login extends JFrame {
 				CrearUsuario.main(null);
 			}
 		});
-		btnCrearUsuario.setBounds(81, 161, 113, 31);
+		btnCrearUsuario.setBounds(95, 162, 99, 28);
 		contentPane.add(btnCrearUsuario);
 	}
 }

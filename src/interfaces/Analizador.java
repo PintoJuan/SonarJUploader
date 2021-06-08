@@ -57,7 +57,7 @@ public class Analizador extends JFrame {
 	 * Create the frame.
 	 */
 	public Analizador() {
-		setTitle("Analizador de Sonar Cloud");
+		setTitle("Sonar JUploader");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
