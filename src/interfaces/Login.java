@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.sqlite.SQLiteDataSource;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -13,6 +16,9 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
@@ -20,6 +26,7 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	static Login frame = new Login();
 
 	/**
 	 * Launch the application.
@@ -31,10 +38,27 @@ public class Login extends JFrame {
 			e.printStackTrace();
 		}
 		UIManager.put("OptionPane.messageFont", new Font("Rockwell", Font.PLAIN, 14));
+		
+		
+		try {
+			SQLiteDataSource ds = new SQLiteDataSource();
+			ds.setUrl("jdbc:sqlite:SonarJUploader.db");
+			Connection conn = ds.getConnection();
+			String query =  "CREATE TABLE IF NOT EXISTS usuarios ( " +
+	                 		"ID INTEGER PRIMARY KEY, " +
+	                 		"NOMBRE TEXT NOT NULL, " +
+							"PASSWORD TEXT NOT NULL )";
+			Statement stmt = conn.createStatement();
+			int rv = stmt.executeUpdate( query );
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			System.out.println( "Error" );
+		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					//Login frame = new Login();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -105,7 +129,13 @@ public class Login extends JFrame {
 		contentPane.add(btnCerrar);
 		
 		JButton btnCrearUsuario = new JButton("Crear Usuario");
-		btnCrearUsuario.setBounds(95, 161, 99, 31);
+		btnCrearUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setEnabled(false);
+				CrearUsuario.main(null);
+			}
+		});
+		btnCrearUsuario.setBounds(81, 161, 113, 31);
 		contentPane.add(btnCrearUsuario);
 	}
 }
