@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import org.sqlite.SQLiteDataSource;
@@ -42,7 +43,7 @@ public class Login extends JFrame {
 		}
 		UIManager.put("OptionPane.messageFont", new Font("Rockwell", Font.PLAIN, 14));
 		
-		
+		//Crea la base de datos y tablas si no existen
 		try {
 			SQLiteDataSource ds = new SQLiteDataSource();
 			ds.setUrl("jdbc:sqlite:SonarJUploader.db");
@@ -50,12 +51,47 @@ public class Login extends JFrame {
 			String query =  "CREATE TABLE IF NOT EXISTS usuarios ( " +
 	                 		"ID INTEGER PRIMARY KEY, " +
 	                 		"NOMBRE TEXT NOT NULL, " +
-							"PASSWORD TEXT NOT NULL )";
+	                 		"PASSWORD TEXT NOT NULL, " +
+							"CORREO TEXT NOT NULL )";
 			Statement stmt = conn.createStatement();
 			int rv = stmt.executeUpdate( query );
 			conn.close();
 		} catch (SQLException e1) {
 			JOptionPane.showMessageDialog(null, "Existe un error con la base de datos.");
+		}
+		
+		//Controla si la tabla de usuarios está vacía
+		boolean insertAdmin = false;
+		try {
+			SQLiteDataSource ds = new SQLiteDataSource();
+			ds.setUrl("jdbc:sqlite:SonarJUploader.db");
+			Connection conn = ds.getConnection();
+			String query =  "SELECT * FROM usuarios";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery( query );
+			
+			if (rs.next() == false) {
+				insertAdmin = true;
+			}
+			
+			conn.close();
+		} catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, "Existe un error con la verificación de tabla de usuarios vacía.");
+		}
+		
+		//Si la tabla de usuarios está vacía, crea la cuenta de administración
+		if (insertAdmin == true) {
+			try {
+				SQLiteDataSource ds = new SQLiteDataSource();
+				ds.setUrl("jdbc:sqlite:SonarJUploader.db");
+				Connection conn = ds.getConnection();
+				String query = "INSERT INTO usuarios (NOMBRE, PASSWORD, CORREO) VALUES ('admin', 'admin', 'admin@admin.com')";
+				Statement stmt = conn.createStatement();
+				int rv = stmt.executeUpdate( query );
+				conn.close();
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(null, "Existe un error con la creación del usuario vacía administrador.");
+			}
 		}
 		
 		EventQueue.invokeLater(new Runnable() {
@@ -107,7 +143,7 @@ public class Login extends JFrame {
 		lblContraseña.setBounds(85, 127, 80, 16);
 		contentPane.add(lblContraseña);
 		
-		txtContraseña = new JTextField();
+		txtContraseña = new JPasswordField();
 		txtContraseña.setHorizontalAlignment(SwingConstants.CENTER);
 		txtContraseña.setColumns(10);
 		txtContraseña.setBounds(162, 122, 197, 28);

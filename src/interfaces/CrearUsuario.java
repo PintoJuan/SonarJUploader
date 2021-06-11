@@ -6,6 +6,7 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -28,6 +29,8 @@ public class CrearUsuario extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtNombre;
 	private JTextField txtContraseña;
+	private JTextField txtConfirmarContraseña;
+	private JTextField txtCorreo;
 
 	/**
 	 * Launch the application.
@@ -60,7 +63,7 @@ public class CrearUsuario extends JFrame {
 	public CrearUsuario() {
 		setTitle("Sonar JUploader");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 245);
+		setBounds(100, 100, 450, 316);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -85,13 +88,13 @@ public class CrearUsuario extends JFrame {
 		
 		JLabel lblContraseña = new JLabel("Contrase\u00F1a:");
 		lblContraseña.setFont(new Font("Rockwell", Font.BOLD, 12));
-		lblContraseña.setBounds(75, 120, 80, 16);
+		lblContraseña.setBounds(75, 159, 80, 16);
 		contentPane.add(lblContraseña);
 		
-		txtContraseña = new JTextField();
+		txtContraseña = new JPasswordField();
 		txtContraseña.setHorizontalAlignment(SwingConstants.CENTER);
 		txtContraseña.setColumns(10);
-		txtContraseña.setBounds(152, 115, 197, 28);
+		txtContraseña.setBounds(152, 154, 197, 28);
 		contentPane.add(txtContraseña);
 		
 		JButton btnAceptar = new JButton("Aceptar");
@@ -105,6 +108,21 @@ public class CrearUsuario extends JFrame {
 				
 				if (txtContraseña.getText().isEmpty() == true) {
 					JOptionPane.showMessageDialog(null, "Debe ingresar una contraseña.");
+					return;
+				}
+				
+				if (txtConfirmarContraseña.getText().isEmpty() == true) {
+					JOptionPane.showMessageDialog(null, "Debe confirmar su contraseña.");
+					return;
+				}
+				
+				if (txtCorreo.getText().isEmpty() == true) {
+					JOptionPane.showMessageDialog(null, "Debe ingresar un correo.");
+					return;
+				}
+				
+				if (!txtContraseña.getText().equals(txtConfirmarContraseña.getText())) {
+					JOptionPane.showMessageDialog(null, "Error en la confirmación de contraseña.");
 					return;
 				}
 				
@@ -128,25 +146,31 @@ public class CrearUsuario extends JFrame {
 					conn.close();
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(null, "Error al iniciar sesión.");
+					Login.frame.setEnabled(true);
+					dispose();
+					return;
 				}
 				
 				try {
 					SQLiteDataSource ds = new SQLiteDataSource();
 					ds.setUrl("jdbc:sqlite:SonarJUploader.db");
 					Connection conn = ds.getConnection();
-					String query = "INSERT INTO usuarios ( NOMBRE, PASSWORD ) VALUES ( '"+txtNombre.getText()+"', '"+txtContraseña.getText()+"' )";
+					String query = "INSERT INTO usuarios ( NOMBRE, PASSWORD, CORREO ) VALUES ( '"+txtNombre.getText()+"', '"+txtContraseña.getText()+"', '"+txtCorreo.getText()+"' )";
 					Statement stmt = conn.createStatement();
 					int rv = stmt.executeUpdate( query );
 					conn.close();
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(null, "No se pudo crear el usuario.");
+					Login.frame.setEnabled(true);
+					dispose();
+					return;
 				}
 				JOptionPane.showMessageDialog(null, "Usuario generado exitosamente.");
 				Login.frame.setEnabled(true);
 				dispose();
 			}
 		});
-		btnAceptar.setBounds(152, 154, 99, 30);
+		btnAceptar.setBounds(152, 232, 99, 30);
 		contentPane.add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -156,7 +180,29 @@ public class CrearUsuario extends JFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(250, 154, 99, 30);
+		btnCancelar.setBounds(250, 232, 99, 30);
 		contentPane.add(btnCancelar);
+		
+		JLabel lblConfirmarContraseña = new JLabel("Confirmar Contrase\u00F1a:");
+		lblConfirmarContraseña.setFont(new Font("Rockwell", Font.BOLD, 12));
+		lblConfirmarContraseña.setBounds(10, 198, 145, 16);
+		contentPane.add(lblConfirmarContraseña);
+		
+		txtConfirmarContraseña = new JPasswordField();
+		txtConfirmarContraseña.setHorizontalAlignment(SwingConstants.CENTER);
+		txtConfirmarContraseña.setColumns(10);
+		txtConfirmarContraseña.setBounds(152, 193, 197, 28);
+		contentPane.add(txtConfirmarContraseña);
+		
+		JLabel lblCorreo = new JLabel("Correo:");
+		lblCorreo.setFont(new Font("Rockwell", Font.BOLD, 12));
+		lblCorreo.setBounds(102, 120, 53, 16);
+		contentPane.add(lblCorreo);
+		
+		txtCorreo = new JTextField();
+		txtCorreo.setHorizontalAlignment(SwingConstants.CENTER);
+		txtCorreo.setColumns(10);
+		txtCorreo.setBounds(152, 115, 197, 28);
+		contentPane.add(txtCorreo);
 	}
 }
