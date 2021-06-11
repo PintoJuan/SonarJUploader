@@ -6,10 +6,13 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.32.3.2.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="lib/core-module-6.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/simple-java-mail-6.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.32.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="lib/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-simple-1.7.9.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.9.jar"/>
+	<classpathentry kind="lib" path="lib/emailaddress-rfc2822-2.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -118,7 +118,7 @@ public class EditarUsuario extends JFrame {
 					SQLiteDataSource ds = new SQLiteDataSource();
 					ds.setUrl("jdbc:sqlite:SonarJUploader.db");
 					Connection conn = ds.getConnection();
-					String query =  "SELECT * FROM usuarios";
+					String query =  "SELECT * FROM usuarios WHERE ID != '"+pID+"'";
 					Statement stmt = conn.createStatement();
 					ResultSet rs = stmt.executeQuery( query );
 					

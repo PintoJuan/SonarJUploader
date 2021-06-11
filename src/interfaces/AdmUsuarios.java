@@ -82,7 +82,7 @@ public class AdmUsuarios extends JFrame {
 				dispose();
 			}
 		});
-		btnCerrar.setBounds(685, 402, 89, 23);
+		btnCerrar.setBounds(668, 402, 106, 23);
 		contentPane.add(btnCerrar);
 		
 		ResultSet rs = null;
@@ -124,8 +124,22 @@ public class AdmUsuarios extends JFrame {
 				EditarUsuario.main(id);
 			}
 		});
-		btnEditar.setBounds(10, 402, 89, 23);
+		btnEditar.setBounds(10, 402, 106, 23);
 		contentPane.add(btnEditar);
+		
+		JButton btnEnviarCorreo = new JButton("Enviar Correo");
+		btnEnviarCorreo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int fila = tablaUsuarios.getSelectedRow();
+				String id = (String) tablaUsuarios.getValueAt(fila, 0);
+				frame.setEnabled(false);
+				EnviarCorreo.main(id);
+			}
+		});
+		btnEnviarCorreo.setBounds(126, 402, 106, 23);
+		contentPane.add(btnEnviarCorreo);
+		
+		tablaUsuarios.setRowSelectionInterval(0, 0);
 	}
 	
 	public void CargarColumnas (ResultSet rs, ArrayList<String> IDS, ArrayList<String> Nombres, ArrayList<String> Contraseñas, ArrayList<String> Correos) {
