@@ -66,6 +66,7 @@ public class AdmUsuarios extends JFrame {
 	 * Create the frame.
 	 */
 	public AdmUsuarios() {
+		setResizable(false);
 		setTitle("Sonar JUploader");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 475);
@@ -86,15 +87,15 @@ public class AdmUsuarios extends JFrame {
 		contentPane.add(btnCerrar);
 		
 		ResultSet rs = null;
-		ArrayList<String> IDS = new ArrayList<String>();
+		ArrayList<String> IDs = new ArrayList<String>();
 		ArrayList<String> Nombres = new ArrayList<String>();
 		ArrayList<String> Contraseñas = new ArrayList<String>();
 		ArrayList<String> Correos = new ArrayList<String>();
-		CargarColumnas(rs, IDS, Nombres, Contraseñas, Correos);
+		CargarColumnas(rs, IDs, Nombres, Contraseñas, Correos);
 		
 		String[][] data = new String[Nombres.size()][4];
 		for (int i=0; i < Nombres.size(); i++) {
-			data[i][0] = IDS.get(i);
+			data[i][0] = IDs.get(i);
 			data[i][1] = Nombres.get(i);
 			data[i][2] = Contraseñas.get(i);
 			data[i][3] = Correos.get(i);
@@ -112,7 +113,7 @@ public class AdmUsuarios extends JFrame {
 		lblAdministrarUsuarios = new JLabel("~ Administrar Usuarios ~");
 		lblAdministrarUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministrarUsuarios.setFont(new Font("Rockwell", Font.BOLD, 20));
-		lblAdministrarUsuarios.setBounds(10, 38, 764, 16);
+		lblAdministrarUsuarios.setBounds(10, 28, 764, 16);
 		contentPane.add(lblAdministrarUsuarios);
 		
 		btnEditar = new JButton("Editar");
@@ -165,7 +166,7 @@ public class AdmUsuarios extends JFrame {
 			}
 			conn.close();
 		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null, "Error al iniciar sesión.");
+			JOptionPane.showMessageDialog(null, "Error al obtener información de usuarios.");
 		}
 	}
 }

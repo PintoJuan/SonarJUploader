@@ -60,6 +60,7 @@ public class EditarUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public EditarUsuario(String pID) {
+		setResizable(false);
 		setTitle("Sonar JUploader");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 263);

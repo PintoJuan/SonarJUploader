@@ -88,16 +88,16 @@ public class Principal {
 		mnNewMenu_1.add(mntmNewMenuItem_1);
 		frmJuploader.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("Analizar Proyectos");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnAnalizarProyecto = new JButton("Analizar Proyectos");
+		btnAnalizarProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmJuploader.setEnabled(false);
 				Analizador.main(null);
 
 			}
 		});
-		btnNewButton.setBounds(175, 187, 239, 23);
-		frmJuploader.getContentPane().add(btnNewButton);
+		btnAnalizarProyecto.setBounds(175, 187, 239, 23);
+		frmJuploader.getContentPane().add(btnAnalizarProyecto);
 		
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.addActionListener(new ActionListener() {
@@ -113,6 +113,12 @@ public class Principal {
 		frmJuploader.getContentPane().add(btnPreconfigurarProyecto);
 		
 		JButton btnAdministrarOrganizaciones = new JButton("Administrar Organizaciones de Sonar Cloud");
+		btnAdministrarOrganizaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmJuploader.setEnabled(false);
+				AdmOrganizaciones.main(null);
+			}
+		});
 		btnAdministrarOrganizaciones.setBounds(175, 119, 239, 23);
 		frmJuploader.getContentPane().add(btnAdministrarOrganizaciones);
 		
@@ -140,9 +146,13 @@ public class Principal {
 						SQLiteDataSource ds = new SQLiteDataSource();
 						ds.setUrl("jdbc:sqlite:SonarJUploader.db");
 						Connection conn = ds.getConnection();
-						String query = "DELETE FROM usuarios WHERE ( ID = '"+Principal.lblIDValue.getText()+"' )";
+						String query = "DELETE FROM organizaciones WHERE ( USUARIOID = '"+Principal.lblIDValue.getText()+"' )";
 						Statement stmt = conn.createStatement();
 						int rv = stmt.executeUpdate( query );
+						
+						query = "DELETE FROM usuarios WHERE ( ID = '"+Principal.lblIDValue.getText()+"' )";
+						rv = stmt.executeUpdate( query );
+						
 						conn.close();
 						JOptionPane.showMessageDialog(null, "Usuario borrado exitosamente.");
 					} catch (SQLException e1) {
@@ -211,6 +221,16 @@ public class Principal {
 		}
 		if (Integer.valueOf(lblIDValue.getText()) == 1) {
 			btnBorrarUsuario.setEnabled(false);
+			btnAdministrarOrganizaciones.setEnabled(false);
+			btnReportes.setEnabled(false);
+			btnAnalizarProyecto.setEnabled(false);
+			btnPreconfigurarProyecto.setEnabled(false);
+		}
+		if (Integer.valueOf(lblIDValue.getText()) == 0) {
+			btnBorrarUsuario.setEnabled(false);
+			btnEditarUsuario.setEnabled(false);
+			btnAdministrarOrganizaciones.setEnabled(false);
+			btnReportes.setEnabled(false);
 		}
 	}
 }

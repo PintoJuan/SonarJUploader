@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
@@ -44,11 +45,20 @@ public class EnviarCorreo extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String pID) {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		UIManager.put("OptionPane.messageFont", new Font("Rockwell", Font.PLAIN, 14));
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					EnviarCorreo frame = new EnviarCorreo(pID);
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
+					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,6 +70,8 @@ public class EnviarCorreo extends JFrame {
 	 * Create the frame.
 	 */
 	public EnviarCorreo(String pID) {
+		setTitle("Sonar JUploader");
+		setResizable(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 355);

@@ -7,6 +7,9 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.sqlite.SQLiteDataSource;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
@@ -15,10 +18,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
+import javax.swing.JTextArea;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class Analizador extends JFrame {
 
@@ -60,7 +72,7 @@ public class Analizador extends JFrame {
 		setTitle("Sonar JUploader");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 490);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -101,40 +113,40 @@ public class Analizador extends JFrame {
 				one.start();
 			}
 		});
-		btnIniciar.setBounds(174, 227, 89, 23);
+		btnIniciar.setBounds(174, 417, 89, 23);
 		contentPane.add(btnIniciar);
 		
 		JLabel lblOrganizacion = new JLabel("Organizaci\u00F3n");
 		lblOrganizacion.setFont(new Font("Rockwell", Font.BOLD, 12));
-		lblOrganizacion.setBounds(174, 51, 81, 16);
+		lblOrganizacion.setBounds(174, 241, 81, 16);
 		contentPane.add(lblOrganizacion);
 		
 		txtOrganizacion = new JTextField();
 		txtOrganizacion.setHorizontalAlignment(SwingConstants.CENTER);
 		txtOrganizacion.setColumns(10);
-		txtOrganizacion.setBounds(51, 71, 320, 28);
+		txtOrganizacion.setBounds(51, 261, 320, 28);
 		contentPane.add(txtOrganizacion);
 		
 		JLabel lblToken = new JLabel("Token");
 		lblToken.setFont(new Font("Rockwell", Font.BOLD, 12));
-		lblToken.setBounds(198, 110, 38, 16);
+		lblToken.setBounds(198, 300, 38, 16);
 		contentPane.add(lblToken);
 		
 		txtToken = new JTextField();
 		txtToken.setHorizontalAlignment(SwingConstants.CENTER);
 		txtToken.setColumns(10);
-		txtToken.setBounds(51, 128, 320, 28);
+		txtToken.setBounds(51, 318, 320, 28);
 		contentPane.add(txtToken);
 		
 		JLabel lblCarpetaProyectos = new JLabel("Carpeta de Proyectos");
 		lblCarpetaProyectos.setFont(new Font("Rockwell", Font.BOLD, 12));
-		lblCarpetaProyectos.setBounds(155, 167, 126, 16);
+		lblCarpetaProyectos.setBounds(155, 357, 126, 16);
 		contentPane.add(lblCarpetaProyectos);
 		
 		txtCarpetaProyectos = new JTextField();
 		txtCarpetaProyectos.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCarpetaProyectos.setColumns(10);
-		txtCarpetaProyectos.setBounds(51, 188, 320, 28);
+		txtCarpetaProyectos.setBounds(51, 378, 320, 28);
 		contentPane.add(txtCarpetaProyectos);
 		
 		JButton btnBuscar = new JButton("...");
@@ -150,12 +162,12 @@ public class Analizador extends JFrame {
 				}
 			}
 		});
-		btnBuscar.setBounds(381, 191, 43, 23);
+		btnBuscar.setBounds(381, 381, 43, 23);
 		contentPane.add(btnBuscar);
 		
 		JLabel lblTituloAnalizador = new JLabel("~ Analizar con Sonar Cloud ~");
 		lblTituloAnalizador.setFont(new Font("Rockwell", Font.BOLD, 20));
-		lblTituloAnalizador.setBounds(69, 17, 285, 16);
+		lblTituloAnalizador.setBounds(69, 26, 285, 16);
 		contentPane.add(lblTituloAnalizador);
 		
 		JButton btnCerrar = new JButton("Cerrar");
@@ -163,6 +175,7 @@ public class Analizador extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Principal.frmJuploader.setEnabled(true);
+					Principal.frmJuploader.toFront();
 					dispose();
 				} catch (Exception e1) {
 					System.exit(0);
@@ -171,7 +184,92 @@ public class Analizador extends JFrame {
 				
 			}
 		});
-		btnCerrar.setBounds(335, 227, 89, 23);
+		btnCerrar.setBounds(335, 417, 89, 23);
 		contentPane.add(btnCerrar);
+		
+		JLabel lblTituloDeOrganizacion = new JLabel("T\u00EDtulo de Organizaci\u00F3n");
+		lblTituloDeOrganizacion.setFont(new Font("Rockwell", Font.BOLD, 12));
+		lblTituloDeOrganizacion.setBounds(143, 68, 138, 16);
+		contentPane.add(lblTituloDeOrganizacion);
+		
+		JTextArea txtDescripcion = new JTextArea();
+		txtDescripcion.setWrapStyleWord(true);
+		txtDescripcion.setLineWrap(true);
+		txtDescripcion.setEditable(false);
+		txtDescripcion.setBounds(51, 152, 320, 78);
+		contentPane.add(txtDescripcion);
+		
+		JLabel lblDescripcion = new JLabel("Descripci\u00F3n");
+		lblDescripcion.setFont(new Font("Rockwell", Font.BOLD, 12));
+		lblDescripcion.setBounds(174, 129, 81, 16);
+		contentPane.add(lblDescripcion);
+		
+		JComboBox cbTituloDeOrganizacion = new JComboBox();
+		cbTituloDeOrganizacion.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				
+				String idTitulo = String.valueOf(cbTituloDeOrganizacion.getSelectedItem());
+				int firstSpace = idTitulo.indexOf(" ");
+				String id = idTitulo.substring(0 , firstSpace);
+				
+				try {
+					SQLiteDataSource ds = new SQLiteDataSource();
+					ds.setUrl("jdbc:sqlite:SonarJUploader.db");
+					Connection conn = ds.getConnection();
+					String query =  "SELECT * FROM organizaciones WHERE ID = '"+id+"'";
+					Statement stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery( query );
+					
+					txtDescripcion.setText(rs.getString( "DESCRIPCION" ));
+					txtOrganizacion.setText(rs.getString( "NOMBRESONAR" ));
+					txtToken.setText(rs.getString( "TOKEN" ));
+					txtCarpetaProyectos.setText(rs.getString( "CARPETA" ));
+					
+					conn.close();
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Error al cargar los datos de la organizacion.");
+				}
+			}
+		});
+		cbTituloDeOrganizacion.setBounds(51, 95, 320, 23);
+		contentPane.add(cbTituloDeOrganizacion);
+		
+		if (Integer.parseInt(Principal.lblIDValue.getText()) >= 2) {
+			try {
+				SQLiteDataSource ds = new SQLiteDataSource();
+				ds.setUrl("jdbc:sqlite:SonarJUploader.db");
+				Connection conn = ds.getConnection();
+				String query =  "SELECT * FROM organizaciones WHERE USUARIOID = '"+Principal.lblIDValue.getText()+"'";
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery( query );
+				
+				if (rs.next() == false) {
+					cbTituloDeOrganizacion.enable(false);
+					txtDescripcion.enable(false);
+				}
+				else {
+					rs = stmt.executeQuery( query );
+					txtDescripcion.setText(rs.getString( "DESCRIPCION" ));
+					txtOrganizacion.setText(rs.getString( "NOMBRESONAR" ));
+					txtToken.setText(rs.getString( "TOKEN" ));
+					txtCarpetaProyectos.setText(rs.getString( "CARPETA" ));
+					
+					
+					while ( rs.next() ) {
+						int id = rs.getInt( "ID" );
+						String titulo = rs.getString( "TITULO" );
+						cbTituloDeOrganizacion.addItem(id+" - "+titulo);
+					}
+				}
+				
+				conn.close();
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(null, "Error al cargar los datos de las organizaciones.");
+			}
+		}
+		else {
+			cbTituloDeOrganizacion.enable(false);
+			txtDescripcion.enable(false);
+		}
 	}
 }

@@ -55,6 +55,18 @@ public class Login extends JFrame {
 							"CORREO TEXT NOT NULL )";
 			Statement stmt = conn.createStatement();
 			int rv = stmt.executeUpdate( query );
+			
+			query =  "CREATE TABLE IF NOT EXISTS organizaciones ( " +
+             		"ID INTEGER PRIMARY KEY, " +
+             		"USUARIOID INTEGER NOT NULL, " +
+             		"TITULO TEXT NOT NULL, " +
+             		"DESCRIPCION TEXT, " +
+             		"NOMBRESONAR TEXT NOT NULL, " +
+             		"TOKEN TEXT NOT NULL, " +
+					"CARPETA TEXT, " +
+					"FOREIGN KEY(USUARIOID) REFERENCES usuarios(ID))";
+			rv = stmt.executeUpdate( query );
+			
 			conn.close();
 		} catch (SQLException e1) {
 			JOptionPane.showMessageDialog(null, "Existe un error con la base de datos.");
@@ -113,9 +125,10 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setResizable(false);
 		setTitle("Sonar JUploader");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 250);
+		setBounds(100, 100, 500, 283);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -196,7 +209,7 @@ public class Login extends JFrame {
 				
 			}
 		});
-		btnIngresar.setBounds(204, 161, 99, 30);
+		btnIngresar.setBounds(266, 161, 99, 30);
 		contentPane.add(btnIngresar);
 		
 		JButton btnCerrar = new JButton("Cerrar");
@@ -205,7 +218,7 @@ public class Login extends JFrame {
 				System.exit(0);
 			}
 		});
-		btnCerrar.setBounds(312, 161, 99, 30);
+		btnCerrar.setBounds(266, 193, 99, 30);
 		contentPane.add(btnCerrar);
 		
 		JButton btnCrearUsuario = new JButton("Crear Usuario");
@@ -215,7 +228,20 @@ public class Login extends JFrame {
 				CrearUsuario.main(null);
 			}
 		});
-		btnCrearUsuario.setBounds(95, 162, 99, 28);
+		btnCrearUsuario.setBounds(157, 162, 99, 28);
 		contentPane.add(btnCrearUsuario);
+		
+		JButton btnInvitado = new JButton("Invitado");
+		btnInvitado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String[] idnombre = new String[2];
+		    	idnombre[0] = "0";
+		    	idnombre[1] = "Invitado";
+		    	Principal.main(idnombre);
+				dispose();
+			}
+		});
+		btnInvitado.setBounds(157, 194, 99, 28);
+		contentPane.add(btnInvitado);
 	}
 }
