@@ -21,6 +21,9 @@ import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class Principal {
 	
@@ -72,20 +75,42 @@ public class Principal {
 		JMenuBar menuBar = new JMenuBar();
 		frmJuploader.setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("New menu");
-		menuBar.add(mnNewMenu);
+		JMenu mnArchivo = new JMenu("Archivo");
+		menuBar.add(mnArchivo);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
-		mnNewMenu.add(mntmNewMenuItem);
+		JMenuItem mntmWebSonarCloud = new JMenuItem("Web Sonar Cloud");
+		mntmWebSonarCloud.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String url_open ="https://sonarcloud.io/";
+				try {
+					java.awt.Desktop.getDesktop().browse(java.net.URI.create(url_open));
+				} catch (IOException ex3) {
+					JOptionPane.showMessageDialog(null, "No se pudo abrir el navegador web.");
+				}
+			}
+		});
+		mnArchivo.add(mntmWebSonarCloud);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("New menu item");
-		mnNewMenu.add(mntmNewMenuItem_2);
+		JMenuItem mntmSalir = new JMenuItem("Salir");
+		mntmSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		mnArchivo.add(mntmSalir);
 		
-		JMenu mnNewMenu_1 = new JMenu("New menu");
-		menuBar.add(mnNewMenu_1);
+		JMenu mnAyuda = new JMenu("Ayuda");
+		menuBar.add(mnAyuda);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("New menu item");
-		mnNewMenu_1.add(mntmNewMenuItem_1);
+		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de...");
+		mntmAcercaDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Sonar JUploader es una herramienta para analizar lotes de proyectos java con Sonar Cloud. \n"
+						+ "Fue creada en el contexto del Proyecto Final de Carrera del alumno Pinto Oppido Juan Alberto, \n"
+						+ "en la carrera de Licenciatura en Sistemas de Información de la Universidad Nacional del Nordeste.");
+			}
+		});
+		mnAyuda.add(mntmAcercaDe);
 		frmJuploader.getContentPane().setLayout(null);
 		
 		JButton btnAnalizarProyecto = new JButton("Analizar Proyectos");
@@ -109,6 +134,12 @@ public class Principal {
 		frmJuploader.getContentPane().add(btnCerrar);
 		
 		JButton btnPreconfigurarProyecto = new JButton("Pre-configurar Proyecto");
+		btnPreconfigurarProyecto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmJuploader.setEnabled(false);
+				PreConfProyecto.main(null);
+			}
+		});
 		btnPreconfigurarProyecto.setBounds(175, 153, 239, 23);
 		frmJuploader.getContentPane().add(btnPreconfigurarProyecto);
 		
