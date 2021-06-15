@@ -1,1 +1,0 @@
-Aqui se ubican las carpetas de proyectos que deseamos analizar.
