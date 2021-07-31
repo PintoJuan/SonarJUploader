@@ -154,6 +154,12 @@ public class Principal {
 		frmJuploader.getContentPane().add(btnAdministrarOrganizaciones);
 		
 		JButton btnReportes = new JButton("Visualizar Reportes");
+		btnReportes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmJuploader.setEnabled(false);
+				VisualizarReportes.main(null);
+			}
+		});
 		btnReportes.setBounds(175, 221, 239, 23);
 		frmJuploader.getContentPane().add(btnReportes);
 		

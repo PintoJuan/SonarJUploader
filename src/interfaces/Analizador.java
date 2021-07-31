@@ -18,10 +18,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +38,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.JCheckBox;
 
 public class Analizador extends JFrame {
 
@@ -77,44 +85,6 @@ public class Analizador extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JButton btnIniciar = new JButton("Iniciar");
-		btnIniciar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Thread one = new Thread() {
-					public void run() {
-						try {
-							
-							String organizacion = txtOrganizacion.getText();
-							String token = txtToken.getText();
-							String carpetaProyectos = txtCarpetaProyectos.getText();
-							carpetaProyectos = "\"" + carpetaProyectos+"\"";
-							
-							String line;
-							ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/K", "start", "Analyze-Projects.sh", organizacion, token, carpetaProyectos);
-						    Process process = processBuilder.start();
-						    BufferedReader reader =
-						            new BufferedReader(new InputStreamReader(process.getInputStream()));
-						    
-						    while ((line = reader.readLine()) != null) {
-						    	System.out.println(line);
-						     } 
-						    
-						    int output = process.waitFor();
-
-						    reader.close();
-						}
-						catch (IOException | InterruptedException e1) {
-							e1.printStackTrace();
-						}
-				    }
-				};
-				    
-				one.start();
-			}
-		});
-		btnIniciar.setBounds(174, 417, 89, 23);
-		contentPane.add(btnIniciar);
 		
 		JLabel lblOrganizacion = new JLabel("Organizaci\u00F3n");
 		lblOrganizacion.setFont(new Font("Rockwell", Font.BOLD, 12));
@@ -233,6 +203,98 @@ public class Analizador extends JFrame {
 		});
 		cbTituloDeOrganizacion.setBounds(51, 95, 320, 23);
 		contentPane.add(cbTituloDeOrganizacion);
+		
+		JCheckBox cbxProjectKeyAutomatico = new JCheckBox("ProjectKey Autom\u00E1tico");
+		cbxProjectKeyAutomatico.setBounds(161, 417, 138, 23);
+		contentPane.add(cbxProjectKeyAutomatico);
+		
+		JButton btnIniciar = new JButton("Iniciar");
+		btnIniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Thread one = new Thread() {
+					public void run() {
+						try {
+							
+							String organizacion = txtOrganizacion.getText();
+							String token = txtToken.getText();
+							String carpetaProyectos = txtCarpetaProyectos.getText();
+							String pathfolder = carpetaProyectos;
+							carpetaProyectos = "\"" + carpetaProyectos+"\"";
+							
+							if (cbTituloDeOrganizacion.isEnabled() == true) {
+								String idTitulo = String.valueOf(cbTituloDeOrganizacion.getSelectedItem());
+								int firstSpace = idTitulo.indexOf(" ");
+								int startTitle = idTitulo.indexOf(" - ");
+								String id = idTitulo.substring(0 , firstSpace);
+								String titulo = idTitulo.substring(startTitle + 3 , idTitulo.length());
+								
+								Calendar currentDate = Calendar.getInstance();
+								int anio = currentDate.get(Calendar.YEAR);
+								int mes = currentDate.get(Calendar.MONTH) + 1;
+								int dia = currentDate.get(Calendar.DAY_OF_MONTH);
+								int hora = currentDate.get(Calendar.HOUR_OF_DAY);
+								int minutos = currentDate.get(Calendar.MINUTE);
+								
+								List<String> fileNames = new ArrayList<>();
+								String listaDeProyectos = "";
+								try {
+								      DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(pathfolder));
+								      for (Path path : directoryStream) {
+								        fileNames.add(path.toString());
+								        listaDeProyectos = listaDeProyectos + ", " + path.getFileName().toString();
+								      }
+								} catch (IOException ex) {
+									JOptionPane.showMessageDialog(null, "No se pudo obtener la información de la carpeta de análisis.");
+								}
+								
+								listaDeProyectos = listaDeProyectos.substring(2 , listaDeProyectos.length());
+								
+								try {
+									SQLiteDataSource ds = new SQLiteDataSource();
+									ds.setUrl("jdbc:sqlite:SonarJUploader.db");
+									Connection conn = ds.getConnection();
+									String query = "INSERT INTO analisis ( USUARIOID, ORGANIZACIONID, ORGANIZACIONNOMBRE, DIA, MES, ANIO, HORA, MINUTO, CANTIDAD, LISTA, CARPETA ) VALUES ( '"+Integer.parseInt(Principal.lblIDValue.getText())+"', '"+Integer.parseInt(id)+"', '"+titulo+"', '"+dia+"', '"+mes+"', '"+anio+"', '"+hora+"', '"+minutos+"', '"+fileNames.size()+"', '"+listaDeProyectos+"', '"+pathfolder+"' )";
+									Statement stmt = conn.createStatement();
+									int rv = stmt.executeUpdate( query );
+									conn.close();
+								} catch (SQLException e1) {
+									JOptionPane.showMessageDialog(null, "No se registrará el análisis en la base de datos.");
+								}
+							}
+							
+							String line;
+							
+							ProcessBuilder processBuilder = null;
+							if (cbxProjectKeyAutomatico.isSelected()) {
+								processBuilder = new ProcessBuilder("cmd.exe", "/K", "start", "scripts/Analyze-Projects-forced.sh", organizacion, token, carpetaProyectos);
+							}
+							else {
+								processBuilder = new ProcessBuilder("cmd.exe", "/K", "start", "scripts/Analyze-Projects.sh", organizacion, token, carpetaProyectos);
+							}
+							
+						    Process process = processBuilder.start();
+						    BufferedReader reader =
+						            new BufferedReader(new InputStreamReader(process.getInputStream()));
+						    
+						    while ((line = reader.readLine()) != null) {
+						    	System.out.println(line);
+						     } 
+						    
+						    int output = process.waitFor();
+
+						    reader.close();
+						}
+						catch (IOException | InterruptedException e1) {
+							e1.printStackTrace();
+						}
+				    }
+				};
+				    
+				one.start();
+			}
+		});
+		btnIniciar.setBounds(51, 417, 89, 23);
+		contentPane.add(btnIniciar);
 		
 		if (Integer.parseInt(Principal.lblIDValue.getText()) >= 2) {
 			try {

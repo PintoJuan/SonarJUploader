@@ -67,6 +67,23 @@ public class Login extends JFrame {
 					"FOREIGN KEY(USUARIOID) REFERENCES usuarios(ID))";
 			rv = stmt.executeUpdate( query );
 			
+			query =  "CREATE TABLE IF NOT EXISTS analisis ( " +
+             		"ID INTEGER PRIMARY KEY, " +
+             		"USUARIOID INTEGER NOT NULL, " +
+             		"ORGANIZACIONID INTEGER NOT NULL, " +
+             		"ORGANIZACIONNOMBRE TEXT, " +
+             		"DIA INTEGER NOT NULL, " +
+             		"MES INTEGER NOT NULL, " +
+             		"ANIO INTEGER NOT NULL, " +
+             		"HORA INTEGER NOT NULL, " +
+             		"MINUTO INTEGER NOT NULL, " +
+             		"CANTIDAD INTEGER NOT NULL, " +
+             		"LISTA TEXT NOT NULL, " +
+					"CARPETA TEXT, " +
+					"FOREIGN KEY(USUARIOID) REFERENCES usuarios(ID)" +
+					"FOREIGN KEY(ORGANIZACIONID) REFERENCES organizaciones(ID))";
+			rv = stmt.executeUpdate( query );
+			
 			conn.close();
 		} catch (SQLException e1) {
 			JOptionPane.showMessageDialog(null, "Existe un error con la base de datos.");

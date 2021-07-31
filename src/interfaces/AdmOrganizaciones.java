@@ -126,7 +126,7 @@ public class AdmOrganizaciones extends JFrame {
 		btnCerrar.setBounds(668, 400, 106, 23);
 		contentPane.add(btnCerrar);
 		
-		JLabel lblAdministrarOrganizaciones = new JLabel("~ Administrar Organizaciones ~");
+		JLabel lblAdministrarOrganizaciones = new JLabel("~ Administrar Organizaciones de Sonar Cloud ~");
 		lblAdministrarOrganizaciones.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministrarOrganizaciones.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblAdministrarOrganizaciones.setBounds(10, 23, 764, 29);

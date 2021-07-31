@@ -15,7 +15,6 @@ then
 
     echo "Sonar JUploader - Análisis de Sonar Cloud con SonarScanner"
     echo "La organización es: " $1
-    echo "El token es: " $2
     echo "La carpeta de proyectos se encuentra en: " $3
     printf "\n"
 
