@@ -134,6 +134,7 @@ public class CrearOrganizacion extends JFrame {
 		txtCarpetaProyectos.setBounds(146, 187, 197, 28);
 		contentPane.add(txtCarpetaProyectos);
 		
+		//Crea una organización nueva en base a los datos ingresados por el usuario
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -189,6 +190,7 @@ public class CrearOrganizacion extends JFrame {
 		btnCancelar.setBounds(244, 219, 99, 30);
 		contentPane.add(btnCancelar);
 		
+		//Permite buscar un directorio y obtener la dirección del mismo
 		JButton btnBuscar = new JButton("...");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

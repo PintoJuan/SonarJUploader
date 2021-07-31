@@ -105,6 +105,7 @@ public class VisualizarReportes extends JFrame {
 		scrollPane.setBounds(10, 63, 764, 288);
 		contentPane.add(scrollPane);
 		
+		//Crea los arraylists usados para cargar la información de la base de datos
 		ResultSet rs = null;
 		ArrayList<String> IDs = new ArrayList<String>();
 		ArrayList<String> UsuarioIDs = new ArrayList<String>();
@@ -118,8 +119,11 @@ public class VisualizarReportes extends JFrame {
 		ArrayList<String> Cantidades = new ArrayList<String>();
 		ArrayList<String> Listas = new ArrayList<String>();
 		ArrayList<String> Carpetas = new ArrayList<String>();
+		
+		//Carga la información de los análisis realizados por el usuario en los arraylists
 		CargarColumnas(rs, IDs, UsuarioIDs, OrganizacionIDs, OrganizacionNombres, Dias, Meses, Anios, Horas, Minutos, Cantidades, Listas, Carpetas);
 		
+		//Carga los datos para formar la tabla
 		String[][] data = new String[OrganizacionNombres.size()][12];
 		for (int i=0; i < OrganizacionNombres.size(); i++) {
 			data[i][0] = IDs.get(i);
@@ -137,6 +141,7 @@ public class VisualizarReportes extends JFrame {
 		}
 		String column[]={"ID", "UsuarioID", "OrganizacionID", "Organizacion", "Dia", "Mes", "Año", "Hora", "Minuto", "Cantidad de Proyectos", "Lista", "Carpeta"};
 		
+		//Crea la tabla y la carga
 		tablaAnalisis = new JTable();
 		scrollPane.setViewportView(tablaAnalisis);
 		tablaAnalisis.setModel(new NonEditableModel(data, column));
@@ -145,6 +150,7 @@ public class VisualizarReportes extends JFrame {
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Cierra la ventana de visualización de reportes y habilita la ventana principal
 				Principal.frmJuploader.setEnabled(true);
 				Principal.frmJuploader.toFront();
 				dispose();
@@ -162,6 +168,7 @@ public class VisualizarReportes extends JFrame {
 		JButton btnExcel = new JButton("Excel");
 		btnExcel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Permite exportar la tabla a excel
 				try {
 					exportarExcel(tablaAnalisis);
 				} catch (IOException e1) {
@@ -213,7 +220,9 @@ public class VisualizarReportes extends JFrame {
 		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Permite filtrar los datos de la tabla por fecha
 				
+				//Controla los datos ingresados en los campos de las fechas
 				if ((FuncionesUtiles.isInteger(txtDia1.getText()) == false) || (Integer.parseInt(txtDia1.getText()) <= 0) || (Integer.parseInt(txtDia1.getText()) >= 32) || (txtDia1.getText().length() != 2)) {
 					JOptionPane.showMessageDialog(null, "Debe ingresar un valor de día de inicio correcto.");
 					return;
@@ -244,12 +253,14 @@ public class VisualizarReportes extends JFrame {
 					return;
 				}
 				
+				//Vacía la tabla
 				NonEditableModel dm = (NonEditableModel)tablaAnalisis.getModel();
 				while(dm.getRowCount() > 0)
 				{
 				    dm.removeRow(0);
 				}
-								
+				
+				//Concatena las fechas en formato YYYYMMDD y las transformas en un número que se usará para comparaciones
 				String temp = txtAnio1.getText();
 				temp = temp.concat(txtMes1.getText());
 				temp = temp.concat(txtDia1.getText());
@@ -263,10 +274,12 @@ public class VisualizarReportes extends JFrame {
 				int cont1 = 0;
 				int cont2 = 0;
 				
+				//Recorre todos los registros para obtener la cantidad exacta que se ubican entre las fechas ingresadas
 				for (int i=0; i < OrganizacionNombres.size(); i++) {
 									
 					temp = Anios.get(i);
 					
+					//Si el mes tiene una sola cifra, se agrega un cero
 					if (Meses.get(i).length() != 2) {
 						temp = temp.concat("0");
 						temp = temp.concat(Meses.get(i));
@@ -274,6 +287,7 @@ public class VisualizarReportes extends JFrame {
 						temp = temp.concat(Meses.get(i));
 					}
 					
+					//Si el dia tiene una sola cifra, se agrega un cero
 					if (Dias.get(i).length() != 2) {
 						temp = temp.concat("0");
 						temp = temp.concat(Dias.get(i));
@@ -283,17 +297,20 @@ public class VisualizarReportes extends JFrame {
 					
 					int fechaComparar = Integer.parseInt(temp);
 					
+					//Se controla la fecha del registro con las fechas ingresadas por el usuario y se cuenta
 					if ((fechaComparar >= fechaInicio) && (fechaComparar <= fechaFin)) {
 						cont1 = cont1 + 1;
 					}
 					
 				}
 				
+				//Se crea un array con el tamaño exacto de registros contados anteriormente
 				String[][] data2 = new String[cont1][12];
 				for (int i=0; i < OrganizacionNombres.size(); i++) {
 					
 					temp = Anios.get(i);
 					
+					//Si el mes tiene una sola cifra, se agrega un cero
 					if (Meses.get(i).length() != 2) {
 						temp = temp.concat("0");
 						temp = temp.concat(Meses.get(i));
@@ -301,6 +318,7 @@ public class VisualizarReportes extends JFrame {
 						temp = temp.concat(Meses.get(i));
 					}
 					
+					//Si el dia tiene una sola cifra, se agrega un cero
 					if (Dias.get(i).length() != 2) {
 						temp = temp.concat("0");
 						temp = temp.concat(Dias.get(i));
@@ -310,6 +328,7 @@ public class VisualizarReportes extends JFrame {
 					
 					int fechaComparar = Integer.parseInt(temp);
 					
+					//Se controla la fecha del registro con las fechas ingresadas por el usuario y se agregan al array que se cargará a la tabla
 					if ((fechaComparar >= fechaInicio) && (fechaComparar <= fechaFin)) {
 						
 						data2[cont2][0] = IDs.get(i);
@@ -329,6 +348,7 @@ public class VisualizarReportes extends JFrame {
 					
 				}
 				
+				//Se carga la tabla
 				tablaAnalisis.setModel(new NonEditableModel(data2, column));
 				tablaAnalisis.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			}
@@ -363,6 +383,7 @@ public class VisualizarReportes extends JFrame {
 		JButton btnMostrarTodo = new JButton("Mostrar Todo");
 		btnMostrarTodo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Recarga la ventana para que se recargue la tabla con todos los registros
 				VisualizarReportes.frame.dispose();
 				VisualizarReportes.main(null);
 				VisualizarReportes.frame.toFront();
@@ -379,28 +400,28 @@ public class VisualizarReportes extends JFrame {
 		JButton btnOrganizaciones = new JButton("Organizaciones");
 		btnOrganizaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//Muestra el gráfico de reporte de la cantidad de organizaciones usadas en los análisis
 				
 				List<String> organizacionesTabla = new ArrayList<String>();
-
+				
+				//Carga en la lista la información de las organizaciones mostradas en la tabla
 				for(int row = 0; row < tablaAnalisis.getRowCount(); row++) {
 					organizacionesTabla.add(String.valueOf(tablaAnalisis.getValueAt(row, 3)));  
 				}
 				
 				
-				// Create a new ArrayList
+				// Crea un nuevo ArrayList
 		        ArrayList<String> sinDuplicados = new ArrayList<String>();
-		        // Traverse through the first list
+		        // Recorre la lista de organizaciones
 		        for (String element : organizacionesTabla) {
-		            // If this element is not present in newList
-		            // then add it
+		            // Se cargan los elementos al nuevo array que no incluye los duplicados
 		            if (!sinDuplicados.contains(element)) {
 		            	sinDuplicados.add(element);
 		            }
 		        }
 				
 		        
-		      //Se realiza el gráfico de barras
+		        //Se realiza el gráfico de barras
 				DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
 		        
 				for (int i = 0; i < sinDuplicados.size(); i++) {
@@ -414,6 +435,7 @@ public class VisualizarReportes extends JFrame {
 			    frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			    frame2.setVisible(true);
 			    frame2.setTitle("Cantidad de Análisis por Organización");
+			    frame2.setLocationRelativeTo(null);
 			    ChartPanel cp2 = new ChartPanel(barChart);
 			    frame2.getContentPane().add(cp2);
 			}
@@ -424,11 +446,13 @@ public class VisualizarReportes extends JFrame {
 		JButton btnCantidadPorMes = new JButton("Cantidad Total x Mes");
 		btnCantidadPorMes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Muestra el gráfico de reporte de la cantidad de proyectos analizados por mes
 				
 				List<String> cantidadesTabla = new ArrayList<String>();
 				List<String> aniosTabla = new ArrayList<String>();
 				List<String> mesesTabla = new ArrayList<String>();
-
+				
+				//Carga en la lista la información de las cantidades, años y meses mostradas en la tabla
 				for(int row = 0; row < tablaAnalisis.getRowCount(); row++) {
 					cantidadesTabla.add(String.valueOf(tablaAnalisis.getValueAt(row, 9)));
 					aniosTabla.add(String.valueOf(tablaAnalisis.getValueAt(row, 6))); 
@@ -439,11 +463,13 @@ public class VisualizarReportes extends JFrame {
 		        ArrayList<String> mesesParaGrafico = new ArrayList<String>();
 		        ArrayList<Integer> CantidadesParaGrafico = new ArrayList<Integer>();
 		        
+		        //Concatena los años y meses en formato YYYY-MM
 		        String guion = "-";
 		        for (int i = 0; i < aniosTabla.size(); i++) {
 		        	anioConcatMes.add(aniosTabla.get(i).concat(guion.concat(mesesTabla.get(i))));
 		        }
 		        
+		        //Carga un arraylist sin los YYYY-MM repetidos
 		        for (String element : anioConcatMes) {
 		            if (!mesesParaGrafico.contains(element)) {
 		            	mesesParaGrafico.add(element);
@@ -452,6 +478,7 @@ public class VisualizarReportes extends JFrame {
 		        
 		        int j = 0;
 		        int acum = 0;
+		        //Recorre las cantidades de análisis comparando con la fecha que le corresponde, obteniendo los totales por YYYY-MM
 		        for (int i = 0; i < anioConcatMes.size(); i++) {
 		        	if (anioConcatMes.get(i).equals(mesesParaGrafico.get(j))) {
 		        		acum = acum + Integer.parseInt(cantidadesTabla.get(i));
@@ -465,10 +492,6 @@ public class VisualizarReportes extends JFrame {
 		        	if (i == anioConcatMes.size()-1) {
 		        		CantidadesParaGrafico.add(acum);
 		        	}
-		        }
-		        
-		        for (Integer element : CantidadesParaGrafico) {
-		        	System.out.print(element);
 		        }
 		        
 		      //Se realiza el gráfico de barras
@@ -485,6 +508,7 @@ public class VisualizarReportes extends JFrame {
 			    frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			    frame2.setVisible(true);
 			    frame2.setTitle("Cantidad de Análisis Total por Mes");
+			    frame2.setLocationRelativeTo(null);
 			    ChartPanel cp2 = new ChartPanel(barChart);
 			    frame2.getContentPane().add(cp2);
 			}
@@ -495,6 +519,9 @@ public class VisualizarReportes extends JFrame {
 		JButton btnCantidadDeUnProyecto = new JButton("Cantidad de un Proyecto ->");
 		btnCantidadDeUnProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Muestra el gráfico de reporte de la cantidad de un proyecto específico por mes
+				
+				//Controla que el usuario ingrese un nombre de proyecto
 				if (txtProyecto.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Debe ingresar el nombre del proyecto.");
 					return;
@@ -504,7 +531,8 @@ public class VisualizarReportes extends JFrame {
 				List<String> listasTabla = new ArrayList<String>();
 				List<String> aniosTabla = new ArrayList<String>();
 				List<String> mesesTabla = new ArrayList<String>();
-
+				
+				//Carga en la lista la información de las listas de proyectos analizados, años y meses mostradas en la tabla
 				for(int row = 0; row < tablaAnalisis.getRowCount(); row++) {
 					listasTabla.add(String.valueOf(tablaAnalisis.getValueAt(row, 10)));
 					aniosTabla.add(String.valueOf(tablaAnalisis.getValueAt(row, 6))); 
@@ -516,7 +544,9 @@ public class VisualizarReportes extends JFrame {
 				ArrayList<String> fechas = new ArrayList<String>();
 				ArrayList<String> fechasSinRepetidos = new ArrayList<String>();
 				ArrayList<Integer> cantidadPorMes = new ArrayList<Integer>();
-
+				
+				//Separa los nombres de proyectos usando la coma como separador y se guardan en un arraylist
+				//También guarda las fechas en formato YYYY-MM en otro arraylist
 				for (int i = 0; i < listasTabla.size(); i++) {
 					String[] temp = listasTabla.get(i).split("\\s*,\\s*");
 					for (int j = 0; j < temp.length; j++) {
@@ -525,6 +555,7 @@ public class VisualizarReportes extends JFrame {
 					}
 				}
 				
+				//Guarda las fechas YYYY-MM sin repetirlas en otro arraylist
 				for (String element : fechas) {
 		            if (!fechasSinRepetidos.contains(element)) {
 		            	fechasSinRepetidos.add(element);
@@ -533,6 +564,8 @@ public class VisualizarReportes extends JFrame {
 				
 				int count = 0;
 				String date = "";
+				
+				//Recorre todos los proyectos comparando sus fechas y contando las cantidades de ocurrencia de cada uno en cada mes
 				for (int i = 0; i < fechasSinRepetidos.size(); i++) {
 					date = fechasSinRepetidos.get(i);
 					for (int j = 0; j < todosLosProyectos.size(); j++) {
@@ -546,6 +579,8 @@ public class VisualizarReportes extends JFrame {
 				}
 				
 				int acum = 0;
+				
+				//Obtiene la cantidad total de apariciones del proyecto
 				for (int i = 0; i < cantidadPorMes.size(); i++) {
 					acum = acum + cantidadPorMes.get(i);
 				}
@@ -564,6 +599,7 @@ public class VisualizarReportes extends JFrame {
 			    frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			    frame2.setVisible(true);
 			    frame2.setTitle("Análisis de "+txtProyecto.getText()+" por Mes");
+			    frame2.setLocationRelativeTo(null);
 			    ChartPanel cp2 = new ChartPanel(barChart);
 			    frame2.getContentPane().add(cp2);
 				
@@ -584,6 +620,7 @@ public class VisualizarReportes extends JFrame {
 		JButton btnAbrirCarpeta = new JButton("Abrir Carpeta");
 		btnAbrirCarpeta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Abre la carpeta de análisis de los proyectos de la linea seleccionada en la tabla
 				try {
 					if (tablaAnalisis.getSelectedRow() == -1) {
 						JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla.");
@@ -609,9 +646,9 @@ public class VisualizarReportes extends JFrame {
 		});
 		btnAbrirCarpeta.setBounds(679, 369, 97, 25);
 		contentPane.add(btnAbrirCarpeta);
-		
 	}
-
+	
+	//Carga la información de los análisis realizados por el usuario en los arraylists
 	public void CargarColumnas (ResultSet rs, ArrayList<String> IDs, ArrayList<String> UsuarioIDs, ArrayList<String> OrganizacionIDs, ArrayList<String> OrganizacionNombres, ArrayList<String> Dias, ArrayList<String> Meses, ArrayList<String> Anios, ArrayList<String> Horas, ArrayList<String> Minutos, ArrayList<String> Cantidades, ArrayList<String> Listas, ArrayList<String> Carpetas) {
 		try {
 			SQLiteDataSource ds = new SQLiteDataSource();
@@ -655,6 +692,7 @@ public class VisualizarReportes extends JFrame {
 		}
 	}
 	
+	//Exporta los datos mostrados actualmente en la tabla a una planilla de excel
 	public void exportarExcel(JTable t) throws IOException {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de excel", "xls");

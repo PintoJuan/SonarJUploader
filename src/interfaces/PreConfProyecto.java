@@ -100,6 +100,7 @@ public class PreConfProyecto extends JFrame {
 		lblPreconfigurarProyecto.setBounds(81, 11, 325, 24);
 		contentPane.add(lblPreconfigurarProyecto);
 		
+		//Crea el fichero sonar.properties con los datos ingresados para el proyecto seleccionado
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -194,6 +195,7 @@ public class PreConfProyecto extends JFrame {
 		txtCarpetaProyecto.setBounds(156, 225, 197, 28);
 		contentPane.add(txtCarpetaProyecto);
 		
+		//Permite buscar una carpeta y obtener su dirección
 		JButton btnBuscarProyecto = new JButton("...");
 		btnBuscarProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -287,6 +289,7 @@ public class PreConfProyecto extends JFrame {
 		txtCarpetaLibraries.setBounds(156, 449, 197, 28);
 		contentPane.add(txtCarpetaLibraries);
 		
+		//Permite buscar una carpeta y obtener su dirección
 		JButton btnBuscarSources = new JButton("...");
 		btnBuscarSources.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -303,6 +306,7 @@ public class PreConfProyecto extends JFrame {
 		btnBuscarSources.setBounds(363, 388, 43, 23);
 		contentPane.add(btnBuscarSources);
 		
+		//Permite buscar una carpeta y obtener su dirección
 		JButton btnBuscarBinaries = new JButton("...");
 		btnBuscarBinaries.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -319,6 +323,7 @@ public class PreConfProyecto extends JFrame {
 		btnBuscarBinaries.setBounds(363, 420, 43, 23);
 		contentPane.add(btnBuscarBinaries);
 		
+		//Permite buscar una carpeta y obtener su dirección
 		JButton btnBuscarLibraries = new JButton("...");
 		btnBuscarLibraries.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -352,6 +357,7 @@ public class PreConfProyecto extends JFrame {
 		txtDescripcion.setBounds(84, 136, 320, 78);
 		contentPane.add(txtDescripcion);
 		
+		//Carga los datos de la organización en base a la que se elige en la lista desplegable
 		JComboBox cbTituloDeOrganizacion = new JComboBox();
 		cbTituloDeOrganizacion.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -385,6 +391,7 @@ public class PreConfProyecto extends JFrame {
 		cbTituloDeOrganizacion.setBounds(84, 79, 320, 23);
 		contentPane.add(cbTituloDeOrganizacion);
 		
+		//Carga las organizaciones a la lista desplegable
 		if (Integer.parseInt(Principal.lblIDValue.getText()) >= 2) {
 			try {
 				SQLiteDataSource ds = new SQLiteDataSource();

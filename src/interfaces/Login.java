@@ -126,7 +126,6 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//Login frame = new Login();
 					frame = new Login();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
@@ -183,6 +182,7 @@ public class Login extends JFrame {
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				//Controla que los campos no estén vacíos
 				if (txtNombre.getText().isEmpty() == true) {
 					JOptionPane.showMessageDialog(null, "Debe ingresar un nombre de usuario.");
 					return;
@@ -193,6 +193,7 @@ public class Login extends JFrame {
 					return;
 				}
 				
+				//Contrasta el usuario y contraseña con la base de datos, si son correctos, ingresa a la pantalla principal
 				try {
 					SQLiteDataSource ds = new SQLiteDataSource();
 					ds.setUrl("jdbc:sqlite:SonarJUploader.db");
@@ -232,6 +233,7 @@ public class Login extends JFrame {
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Cierra el programa
 				System.exit(0);
 			}
 		});
@@ -241,6 +243,7 @@ public class Login extends JFrame {
 		JButton btnCrearUsuario = new JButton("Crear Usuario");
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Abre la pantalla de creación de usuario
 				frame.setEnabled(false);
 				CrearUsuario.main(null);
 			}
@@ -251,6 +254,7 @@ public class Login extends JFrame {
 		JButton btnInvitado = new JButton("Invitado");
 		btnInvitado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Ingresa a la pantalla principal como invitado, sin cuenta de usuario
 				String[] idnombre = new String[2];
 		    	idnombre[0] = "0";
 		    	idnombre[1] = "Invitado";

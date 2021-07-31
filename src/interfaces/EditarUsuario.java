@@ -97,6 +97,7 @@ public class EditarUsuario extends JFrame {
 		txtContraseña.setBounds(152, 109, 197, 28);
 		contentPane.add(txtContraseña);
 		
+		//Edita la información del usuario en la base de datos en base a los datos ingresados
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -205,6 +206,7 @@ public class EditarUsuario extends JFrame {
 		txtCorreo.setBounds(152, 148, 197, 28);
 		contentPane.add(txtCorreo);
 		
+		//Carga los datos del usuario
 		try {
 			SQLiteDataSource ds = new SQLiteDataSource();
 			ds.setUrl("jdbc:sqlite:SonarJUploader.db");

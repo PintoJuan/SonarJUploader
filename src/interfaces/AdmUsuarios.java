@@ -78,6 +78,7 @@ public class AdmUsuarios extends JFrame {
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Cierra la ventana de administración de usuarios y reactiva la ventana principal
 				Principal.frmJuploader.setEnabled(true);
 				Principal.frmJuploader.toFront();
 				dispose();
@@ -86,13 +87,17 @@ public class AdmUsuarios extends JFrame {
 		btnCerrar.setBounds(668, 402, 106, 23);
 		contentPane.add(btnCerrar);
 		
+		//Crea los arraylists usados para cargar la información de la base de datos
 		ResultSet rs = null;
 		ArrayList<String> IDs = new ArrayList<String>();
 		ArrayList<String> Nombres = new ArrayList<String>();
 		ArrayList<String> Contraseñas = new ArrayList<String>();
 		ArrayList<String> Correos = new ArrayList<String>();
+		
+		//Carga la información de los usuarios en los arraylists
 		CargarColumnas(rs, IDs, Nombres, Contraseñas, Correos);
 		
+		//Carga los datos para formar la tabla
 		String[][] data = new String[Nombres.size()][4];
 		for (int i=0; i < Nombres.size(); i++) {
 			data[i][0] = IDs.get(i);
@@ -102,6 +107,7 @@ public class AdmUsuarios extends JFrame {
 		}
 		String column[]={"ID","Nombre","Contraseña","Correo"};  
 		
+		//Crea la tabla y la carga
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 65, 764, 326);
 		contentPane.add(scrollPane);
@@ -119,6 +125,7 @@ public class AdmUsuarios extends JFrame {
 		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Abre la ventana de edición para el usuario seleccionado
 				int fila = tablaUsuarios.getSelectedRow();
 				String id = (String) tablaUsuarios.getValueAt(fila, 0);
 				frame.setEnabled(false);
@@ -131,6 +138,7 @@ public class AdmUsuarios extends JFrame {
 		JButton btnEnviarCorreo = new JButton("Enviar Correo");
 		btnEnviarCorreo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Abre la ventana para envío de correo al usuario
 				int fila = tablaUsuarios.getSelectedRow();
 				String id = (String) tablaUsuarios.getValueAt(fila, 0);
 				frame.setEnabled(false);
@@ -143,6 +151,7 @@ public class AdmUsuarios extends JFrame {
 		tablaUsuarios.setRowSelectionInterval(0, 0);
 	}
 	
+	//Carga la información de los usuarios en los arraylists
 	public void CargarColumnas (ResultSet rs, ArrayList<String> IDS, ArrayList<String> Nombres, ArrayList<String> Contraseñas, ArrayList<String> Correos) {
 		try {
 			SQLiteDataSource ds = new SQLiteDataSource();

@@ -121,6 +121,7 @@ public class Analizador extends JFrame {
 		
 		JButton btnBuscar = new JButton("...");
 		btnBuscar.addActionListener(new ActionListener() {
+			//Permite buscar un directorio de proyectos y obtener su dirección para el analizador
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
 				fc.setCurrentDirectory(new java.io.File(".")); // start at application current directory
@@ -143,6 +144,7 @@ public class Analizador extends JFrame {
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Cierra la ventana de análisis y habilita la ventana principal
 				try {
 					Principal.frmJuploader.setEnabled(true);
 					Principal.frmJuploader.toFront();
@@ -177,6 +179,7 @@ public class Analizador extends JFrame {
 		JComboBox cbTituloDeOrganizacion = new JComboBox();
 		cbTituloDeOrganizacion.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
+				//Actualiza los datos de la organización según lo seleccionado en la lista
 				
 				String idTitulo = String.valueOf(cbTituloDeOrganizacion.getSelectedItem());
 				int firstSpace = idTitulo.indexOf(" ");
@@ -214,6 +217,7 @@ public class Analizador extends JFrame {
 				Thread one = new Thread() {
 					public void run() {
 						try {
+							//Se genera el análisis en base a los datos ingresados y se guarda la información para los reportes
 							
 							String organizacion = txtOrganizacion.getText();
 							String token = txtToken.getText();
@@ -296,6 +300,7 @@ public class Analizador extends JFrame {
 		btnIniciar.setBounds(51, 417, 89, 23);
 		contentPane.add(btnIniciar);
 		
+		//Carga la lista de organizaciones del usuario, o inhabilita la lista si se ingresó como invitado
 		if (Integer.parseInt(Principal.lblIDValue.getText()) >= 2) {
 			try {
 				SQLiteDataSource ds = new SQLiteDataSource();

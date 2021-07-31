@@ -135,6 +135,7 @@ public class EditarOrganizacion extends JFrame {
 		txtCarpetaProyectos.setBounds(146, 187, 197, 28);
 		contentPane.add(txtCarpetaProyectos);
 		
+		//Edita la información de la organización en la base de datos en base a los datos ingresados por el usuario
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -199,6 +200,7 @@ public class EditarOrganizacion extends JFrame {
 		btnCancelar.setBounds(244, 219, 99, 30);
 		contentPane.add(btnCancelar);
 		
+		//Permite buscar una carpeta y obtener su dirección
 		JButton btnBuscar = new JButton("...");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -215,6 +217,7 @@ public class EditarOrganizacion extends JFrame {
 		btnBuscar.setBounds(353, 190, 43, 23);
 		contentPane.add(btnBuscar);
 		
+		//Carga los datos de la organizacion
 		try {
 			SQLiteDataSource ds = new SQLiteDataSource();
 			ds.setUrl("jdbc:sqlite:SonarJUploader.db");

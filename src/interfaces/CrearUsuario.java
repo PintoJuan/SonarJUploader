@@ -98,6 +98,7 @@ public class CrearUsuario extends JFrame {
 		txtContraseña.setBounds(152, 154, 197, 28);
 		contentPane.add(txtContraseña);
 		
+		//Crea un usuario nuevo en base a los datos ingresados
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

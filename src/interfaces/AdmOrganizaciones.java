@@ -78,6 +78,7 @@ public class AdmOrganizaciones extends JFrame {
 		scrollPane.setBounds(10, 63, 764, 326);
 		contentPane.add(scrollPane);
 		
+		//Crea los arraylists usados para cargar la información de la base de datos
 		ResultSet rs = null;
 		ArrayList<String> IDs = new ArrayList<String>();
 		ArrayList<String> UsuarioIDs = new ArrayList<String>();
@@ -86,8 +87,11 @@ public class AdmOrganizaciones extends JFrame {
 		ArrayList<String> NombresSonar = new ArrayList<String>();
 		ArrayList<String> Tokens = new ArrayList<String>();
 		ArrayList<String> Carpetas = new ArrayList<String>();
+		
+		//Carga la información de las organizaciones del usuario en los arraylists
 		CargarColumnas(rs, IDs, UsuarioIDs, Titulos, Descripciones, NombresSonar, Tokens, Carpetas);
 		
+		//Carga los datos para formar la tabla
 		String[][] data = new String[Titulos.size()][7];
 		for (int i=0; i < Titulos.size(); i++) {
 			data[i][0] = IDs.get(i);
@@ -100,6 +104,7 @@ public class AdmOrganizaciones extends JFrame {
 		}
 		String column[]={"ID","UsuarioID","Titulo","Descripción","Nombre Sonar","Token", "Carpeta"};
 		
+		//Crea la tabla y la carga
 		tablaOrganizaciones = new JTable();
 		scrollPane.setViewportView(tablaOrganizaciones);
 		tablaOrganizaciones.setModel(new NonEditableModel(data, column));
@@ -108,6 +113,7 @@ public class AdmOrganizaciones extends JFrame {
 		JButton btnNueva = new JButton("Nueva");
 		btnNueva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Abre la ventana para crear organizaciones nuevas para el usuario
 				frame.setEnabled(false);
 				CrearOrganizacion.main(null);
 			}
@@ -118,6 +124,7 @@ public class AdmOrganizaciones extends JFrame {
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Cierra la ventana de administración de organizaciones y habilita la ventana principal
 				Principal.frmJuploader.setEnabled(true);
 				Principal.frmJuploader.toFront();
 				dispose();
@@ -135,6 +142,7 @@ public class AdmOrganizaciones extends JFrame {
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Abre la ventana de edición para la organización seleccionada
 				try {
 					int fila = tablaOrganizaciones.getSelectedRow();
 					String id = (String) tablaOrganizaciones.getValueAt(fila, 0);
@@ -153,6 +161,7 @@ public class AdmOrganizaciones extends JFrame {
 		JButton btnBorrar = new JButton("Borrar");
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Permite borrar de la base de datos la organización seleccionada
 				try {
 					int fila = tablaOrganizaciones.getSelectedRow();
 					String id = (String) tablaOrganizaciones.getValueAt(fila, 0);
@@ -184,6 +193,7 @@ public class AdmOrganizaciones extends JFrame {
 		contentPane.add(btnBorrar);
 	}
 	
+	//Carga la información de las organizaciones del usuario en los arraylists
 	public void CargarColumnas (ResultSet rs, ArrayList<String> IDs, ArrayList<String> UsuarioIDs, ArrayList<String> Titulos, ArrayList<String> Descripciones, ArrayList<String> NombresSonar, ArrayList<String> Tokens, ArrayList<String> Carpetas) {
 		try {
 			SQLiteDataSource ds = new SQLiteDataSource();
