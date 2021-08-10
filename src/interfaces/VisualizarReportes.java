@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,6 +38,8 @@ import org.sqlite.SQLiteDataSource;
 
 import general.FuncionesUtiles;
 import general.NonEditableModel;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -49,6 +52,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
+import java.awt.Color;
 
 public class VisualizarReportes extends JFrame {
 
@@ -68,7 +72,7 @@ public class VisualizarReportes extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -148,6 +152,7 @@ public class VisualizarReportes extends JFrame {
 		tablaAnalisis.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Cierra la ventana de visualización de reportes y habilita la ventana principal
@@ -160,12 +165,14 @@ public class VisualizarReportes extends JFrame {
 		contentPane.add(btnCerrar);
 		
 		JLabel lblVisualizarReportes = new JLabel("~ Visualizar Reportes ~");
+		lblVisualizarReportes.setForeground(Color.WHITE);
 		lblVisualizarReportes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVisualizarReportes.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblVisualizarReportes.setBounds(10, 23, 764, 29);
 		contentPane.add(lblVisualizarReportes);
 		
 		JButton btnExcel = new JButton("Excel");
+		btnExcel.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnExcel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Permite exportar la tabla a excel
@@ -180,44 +187,55 @@ public class VisualizarReportes extends JFrame {
 		contentPane.add(btnExcel);
 		
 		txtDia1 = new JTextField();
-		txtDia1.setBounds(48, 382, 45, 20);
+		txtDia1.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDia1.setBounds(61, 385, 45, 26);
 		contentPane.add(txtDia1);
 		txtDia1.setColumns(10);
 		
 		txtMes1 = new JTextField();
+		txtMes1.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMes1.setColumns(10);
-		txtMes1.setBounds(103, 382, 45, 20);
+		txtMes1.setBounds(121, 385, 45, 26);
 		contentPane.add(txtMes1);
 		
 		txtAnio1 = new JTextField();
+		txtAnio1.setHorizontalAlignment(SwingConstants.CENTER);
 		txtAnio1.setColumns(10);
-		txtAnio1.setBounds(158, 382, 45, 20);
+		txtAnio1.setBounds(185, 385, 45, 26);
 		contentPane.add(txtAnio1);
 		
 		JLabel lblDesde = new JLabel("Desde:");
-		lblDesde.setBounds(10, 385, 34, 14);
+		lblDesde.setForeground(Color.WHITE);
+		lblDesde.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		lblDesde.setBounds(10, 385, 44, 14);
 		contentPane.add(lblDesde);
 		
 		JLabel lblHasta = new JLabel("Hasta:");
-		lblHasta.setBounds(10, 424, 34, 14);
+		lblHasta.setForeground(Color.WHITE);
+		lblHasta.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		lblHasta.setBounds(15, 424, 42, 14);
 		contentPane.add(lblHasta);
 		
 		txtDia2 = new JTextField();
+		txtDia2.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDia2.setColumns(10);
-		txtDia2.setBounds(47, 421, 45, 20);
+		txtDia2.setBounds(60, 423, 45, 25);
 		contentPane.add(txtDia2);
 		
 		txtMes2 = new JTextField();
+		txtMes2.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMes2.setColumns(10);
-		txtMes2.setBounds(102, 421, 45, 20);
+		txtMes2.setBounds(121, 423, 45, 26);
 		contentPane.add(txtMes2);
 		
 		txtAnio2 = new JTextField();
+		txtAnio2.setHorizontalAlignment(SwingConstants.CENTER);
 		txtAnio2.setColumns(10);
-		txtAnio2.setBounds(157, 421, 45, 20);
+		txtAnio2.setBounds(185, 423, 45, 27);
 		contentPane.add(txtAnio2);
 		
 		JButton btnFiltrar = new JButton("Filtrar");
+		btnFiltrar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Permite filtrar los datos de la tabla por fecha
@@ -353,34 +371,47 @@ public class VisualizarReportes extends JFrame {
 				tablaAnalisis.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			}
 		});
-		btnFiltrar.setBounds(223, 420, 106, 23);
+		btnFiltrar.setBounds(242, 419, 106, 23);
 		contentPane.add(btnFiltrar);
 		
 		JLabel lblDia1 = new JLabel("D\u00EDa (DD)");
-		lblDia1.setBounds(48, 370, 45, 14);
+		lblDia1.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		lblDia1.setForeground(Color.WHITE);
+		lblDia1.setBounds(61, 370, 56, 14);
 		contentPane.add(lblDia1);
 		
 		JLabel lblMes1 = new JLabel("Mes (MM)");
-		lblMes1.setBounds(103, 370, 56, 14);
+		lblMes1.setForeground(Color.WHITE);
+		lblMes1.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		lblMes1.setBounds(115, 370, 66, 14);
 		contentPane.add(lblMes1);
 		
 		JLabel lblAnio1 = new JLabel("A\u00F1o (YYYY)");
-		lblAnio1.setBounds(158, 370, 56, 14);
+		lblAnio1.setForeground(Color.WHITE);
+		lblAnio1.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		lblAnio1.setBounds(177, 371, 75, 14);
 		contentPane.add(lblAnio1);
 		
 		JLabel lblDia2 = new JLabel("D\u00EDa (DD)");
-		lblDia2.setBounds(47, 409, 45, 14);
+		lblDia2.setForeground(Color.WHITE);
+		lblDia2.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		lblDia2.setBounds(61, 409, 55, 14);
 		contentPane.add(lblDia2);
 		
 		JLabel lblMes2 = new JLabel("Mes (MM)");
-		lblMes2.setBounds(102, 409, 56, 14);
+		lblMes2.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		lblMes2.setForeground(Color.WHITE);
+		lblMes2.setBounds(114, 409, 63, 14);
 		contentPane.add(lblMes2);
 		
 		JLabel lblAnio2 = new JLabel("A\u00F1o (YYYY)");
-		lblAnio2.setBounds(157, 409, 56, 14);
+		lblAnio2.setForeground(Color.WHITE);
+		lblAnio2.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		lblAnio2.setBounds(176, 410, 73, 14);
 		contentPane.add(lblAnio2);
 		
 		JButton btnMostrarTodo = new JButton("Mostrar Todo");
+		btnMostrarTodo.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnMostrarTodo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Recarga la ventana para que se recargue la tabla con todos los registros
@@ -389,15 +420,16 @@ public class VisualizarReportes extends JFrame {
 				VisualizarReportes.frame.toFront();
 			}
 		});
-		btnMostrarTodo.setBounds(223, 381, 106, 23);
+		btnMostrarTodo.setBounds(243, 383, 106, 23);
 		contentPane.add(btnMostrarTodo);
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(339, 358, 8, 93);
+		separator.setBounds(351, 366, 8, 93);
 		contentPane.add(separator);
 		
 		JButton btnOrganizaciones = new JButton("Organizaciones");
+		btnOrganizaciones.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnOrganizaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Muestra el gráfico de reporte de la cantidad de organizaciones usadas en los análisis
@@ -440,10 +472,11 @@ public class VisualizarReportes extends JFrame {
 			    frame2.getContentPane().add(cp2);
 			}
 		});
-		btnOrganizaciones.setBounds(357, 428, 167, 23);
+		btnOrganizaciones.setBounds(362, 429, 180, 23);
 		contentPane.add(btnOrganizaciones);
 		
-		JButton btnCantidadPorMes = new JButton("Cantidad Total x Mes");
+		JButton btnCantidadPorMes = new JButton("Cantidad Total por Mes");
+		btnCantidadPorMes.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCantidadPorMes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Muestra el gráfico de reporte de la cantidad de proyectos analizados por mes
@@ -513,10 +546,11 @@ public class VisualizarReportes extends JFrame {
 			    frame2.getContentPane().add(cp2);
 			}
 		});
-		btnCantidadPorMes.setBounds(357, 400, 167, 23);
+		btnCantidadPorMes.setBounds(361, 401, 181, 23);
 		contentPane.add(btnCantidadPorMes);
 		
 		JButton btnCantidadDeUnProyecto = new JButton("Cantidad de un Proyecto ->");
+		btnCantidadDeUnProyecto.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCantidadDeUnProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Muestra el gráfico de reporte de la cantidad de un proyecto específico por mes
@@ -605,19 +639,22 @@ public class VisualizarReportes extends JFrame {
 				
 			}
 		});
-		btnCantidadDeUnProyecto.setBounds(357, 370, 167, 23);
+		btnCantidadDeUnProyecto.setBounds(360, 373, 182, 23);
 		contentPane.add(btnCantidadDeUnProyecto);
 		
 		txtProyecto = new JTextField();
-		txtProyecto.setBounds(539, 370, 130, 23);
+		txtProyecto.setBounds(546, 370, 117, 29);
 		contentPane.add(txtProyecto);
 		txtProyecto.setColumns(10);
 		
 		JLabel lblNombreDeProyecto = new JLabel("Nombre de Proyecto en Lista");
-		lblNombreDeProyecto.setBounds(534, 355, 145, 14);
+		lblNombreDeProyecto.setForeground(Color.WHITE);
+		lblNombreDeProyecto.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		lblNombreDeProyecto.setBounds(519, 355, 174, 14);
 		contentPane.add(lblNombreDeProyecto);
 		
 		JButton btnAbrirCarpeta = new JButton("Abrir Carpeta");
+		btnAbrirCarpeta.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnAbrirCarpeta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Abre la carpeta de análisis de los proyectos de la linea seleccionada en la tabla
@@ -644,8 +681,14 @@ public class VisualizarReportes extends JFrame {
 				}
 			}
 		});
-		btnAbrirCarpeta.setBounds(679, 369, 97, 25);
+		btnAbrirCarpeta.setBounds(666, 372, 108, 25);
 		contentPane.add(btnAbrirCarpeta);
+		
+		JLabel lblFondo = new JLabel("");
+		Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+		lblFondo.setIcon(new ImageIcon(imgFondo));
+		lblFondo.setBounds(0, 0, 784, 504);
+		contentPane.add(lblFondo);
 	}
 	
 	//Carga la información de los análisis realizados por el usuario en los arraylists

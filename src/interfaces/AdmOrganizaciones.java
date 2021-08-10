@@ -14,11 +14,14 @@ import general.NonEditableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -29,6 +32,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class AdmOrganizaciones extends JFrame {
 
@@ -41,7 +45,7 @@ public class AdmOrganizaciones extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -111,6 +115,7 @@ public class AdmOrganizaciones extends JFrame {
 		tablaOrganizaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JButton btnNueva = new JButton("Nueva");
+		btnNueva.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnNueva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Abre la ventana para crear organizaciones nuevas para el usuario
@@ -122,6 +127,7 @@ public class AdmOrganizaciones extends JFrame {
 		contentPane.add(btnNueva);
 		
 		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Cierra la ventana de administración de organizaciones y habilita la ventana principal
@@ -134,12 +140,14 @@ public class AdmOrganizaciones extends JFrame {
 		contentPane.add(btnCerrar);
 		
 		JLabel lblAdministrarOrganizaciones = new JLabel("~ Administrar Organizaciones de Sonar Cloud ~");
+		lblAdministrarOrganizaciones.setForeground(Color.WHITE);
 		lblAdministrarOrganizaciones.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministrarOrganizaciones.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblAdministrarOrganizaciones.setBounds(10, 23, 764, 29);
 		contentPane.add(lblAdministrarOrganizaciones);
 		
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Abre la ventana de edición para la organización seleccionada
@@ -159,6 +167,7 @@ public class AdmOrganizaciones extends JFrame {
 		contentPane.add(btnEditar);
 		
 		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Permite borrar de la base de datos la organización seleccionada
@@ -191,6 +200,12 @@ public class AdmOrganizaciones extends JFrame {
 		});
 		btnBorrar.setBounds(242, 400, 106, 23);
 		contentPane.add(btnBorrar);
+		
+		JLabel lblFondo = new JLabel("");
+		Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+		lblFondo.setIcon(new ImageIcon(imgFondo));
+		lblFondo.setBounds(0, 0, 784, 436);
+		contentPane.add(lblFondo);
 	}
 	
 	//Carga la información de las organizaciones del usuario en los arraylists

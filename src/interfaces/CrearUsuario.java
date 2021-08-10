@@ -3,6 +3,7 @@ package interfaces;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -23,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class CrearUsuario extends JFrame {
 
@@ -37,7 +40,7 @@ public class CrearUsuario extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -71,12 +74,14 @@ public class CrearUsuario extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblTituloCreacion = new JLabel("~ Nuevo Usuario ~");
+		lblTituloCreacion.setForeground(Color.WHITE);
 		lblTituloCreacion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTituloCreacion.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblTituloCreacion.setBounds(10, 31, 414, 16);
 		contentPane.add(lblTituloCreacion);
 		
 		JLabel lblNombreUsuario = new JLabel("Nombre de Usuario:");
+		lblNombreUsuario.setForeground(Color.WHITE);
 		lblNombreUsuario.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblNombreUsuario.setBounds(29, 81, 126, 16);
 		contentPane.add(lblNombreUsuario);
@@ -88,6 +93,7 @@ public class CrearUsuario extends JFrame {
 		contentPane.add(txtNombre);
 		
 		JLabel lblContraseña = new JLabel("Contrase\u00F1a:");
+		lblContraseña.setForeground(Color.WHITE);
 		lblContraseña.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblContraseña.setBounds(75, 159, 80, 16);
 		contentPane.add(lblContraseña);
@@ -100,6 +106,7 @@ public class CrearUsuario extends JFrame {
 		
 		//Crea un usuario nuevo en base a los datos ingresados
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -176,6 +183,7 @@ public class CrearUsuario extends JFrame {
 		contentPane.add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login.frame.setEnabled(true);
@@ -186,6 +194,7 @@ public class CrearUsuario extends JFrame {
 		contentPane.add(btnCancelar);
 		
 		JLabel lblConfirmarContraseña = new JLabel("Confirmar Contrase\u00F1a:");
+		lblConfirmarContraseña.setForeground(Color.WHITE);
 		lblConfirmarContraseña.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblConfirmarContraseña.setBounds(10, 198, 145, 16);
 		contentPane.add(lblConfirmarContraseña);
@@ -197,6 +206,7 @@ public class CrearUsuario extends JFrame {
 		contentPane.add(txtConfirmarContraseña);
 		
 		JLabel lblCorreo = new JLabel("Correo:");
+		lblCorreo.setForeground(Color.WHITE);
 		lblCorreo.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCorreo.setBounds(102, 120, 53, 16);
 		contentPane.add(lblCorreo);
@@ -206,5 +216,11 @@ public class CrearUsuario extends JFrame {
 		txtCorreo.setColumns(10);
 		txtCorreo.setBounds(152, 115, 197, 28);
 		contentPane.add(txtCorreo);
+		
+		JLabel lblFondo = new JLabel("");
+		Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+		lblFondo.setIcon(new ImageIcon(imgFondo));
+		lblFondo.setBounds(0, 0, 434, 277);
+		contentPane.add(lblFondo);
 	}
 }

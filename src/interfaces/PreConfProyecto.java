@@ -13,9 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -31,6 +34,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.Color;
 
 public class PreConfProyecto extends JFrame {
 
@@ -49,7 +53,7 @@ public class PreConfProyecto extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -83,6 +87,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblProjectkey = new JLabel("ProjectKey:");
+		lblProjectkey.setForeground(Color.WHITE);
 		lblProjectkey.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblProjectkey.setBounds(84, 262, 69, 16);
 		contentPane.add(lblProjectkey);
@@ -95,6 +100,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(txtProjectKey);
 		
 		JLabel lblPreconfigurarProyecto = new JLabel("~ Pre-configurar Proyecto ~");
+		lblPreconfigurarProyecto.setForeground(Color.WHITE);
 		lblPreconfigurarProyecto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPreconfigurarProyecto.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblPreconfigurarProyecto.setBounds(81, 11, 325, 24);
@@ -102,6 +108,7 @@ public class PreConfProyecto extends JFrame {
 		
 		//Crea el fichero sonar.properties con los datos ingresados para el proyecto seleccionado
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -174,6 +181,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(btnAceptar);
 		
 		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Principal.frmJuploader.setEnabled(true);
@@ -185,6 +193,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(btnCerrar);
 		
 		JLabel lblCarpetaDelProyecto = new JLabel("Carpeta del Proyecto:");
+		lblCarpetaDelProyecto.setForeground(Color.WHITE);
 		lblCarpetaDelProyecto.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCarpetaDelProyecto.setBounds(25, 230, 128, 16);
 		contentPane.add(lblCarpetaDelProyecto);
@@ -218,6 +227,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(btnBuscarProyecto);
 		
 		JLabel lblProjectName = new JLabel("ProjectName:");
+		lblProjectName.setForeground(Color.WHITE);
 		lblProjectName.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblProjectName.setBounds(70, 294, 82, 16);
 		contentPane.add(lblProjectName);
@@ -230,6 +240,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(txtProjectName);
 		
 		JLabel lblProjectVersion = new JLabel("ProjectVersion:");
+		lblProjectVersion.setForeground(Color.WHITE);
 		lblProjectVersion.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblProjectVersion.setBounds(61, 326, 91, 16);
 		contentPane.add(lblProjectVersion);
@@ -242,6 +253,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(txtProjectVersion);
 		
 		JLabel lblLenguaje = new JLabel("Lenguaje:");
+		lblLenguaje.setForeground(Color.WHITE);
 		lblLenguaje.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblLenguaje.setBounds(92, 358, 61, 16);
 		contentPane.add(lblLenguaje);
@@ -254,6 +266,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(txtLenguaje);
 		
 		JLabel lblCarpetaSources = new JLabel("Carpeta Sources:");
+		lblCarpetaSources.setForeground(Color.WHITE);
 		lblCarpetaSources.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCarpetaSources.setBounds(53, 390, 100, 16);
 		contentPane.add(lblCarpetaSources);
@@ -266,6 +279,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(txtCarpetaSources);
 		
 		JLabel lblCarpetaBinaries = new JLabel("Carpeta Binaries:");
+		lblCarpetaBinaries.setForeground(Color.WHITE);
 		lblCarpetaBinaries.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCarpetaBinaries.setBounds(49, 422, 104, 16);
 		contentPane.add(lblCarpetaBinaries);
@@ -278,6 +292,7 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(txtCarpetaBinaries);
 		
 		JLabel lblCarpetaLibraries = new JLabel("Carpeta Libraries:");
+		lblCarpetaLibraries.setForeground(Color.WHITE);
 		lblCarpetaLibraries.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCarpetaLibraries.setBounds(44, 454, 108, 16);
 		contentPane.add(lblCarpetaLibraries);
@@ -341,11 +356,13 @@ public class PreConfProyecto extends JFrame {
 		contentPane.add(btnBuscarLibraries);
 		
 		JLabel lblTituloDeOrganizacion = new JLabel("T\u00EDtulo de Organizaci\u00F3n");
+		lblTituloDeOrganizacion.setForeground(Color.WHITE);
 		lblTituloDeOrganizacion.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblTituloDeOrganizacion.setBounds(176, 52, 138, 16);
 		contentPane.add(lblTituloDeOrganizacion);
 		
 		JLabel lblDescripcion = new JLabel("Descripci\u00F3n");
+		lblDescripcion.setForeground(Color.WHITE);
 		lblDescripcion.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblDescripcion.setBounds(207, 113, 81, 16);
 		contentPane.add(lblDescripcion);
@@ -390,6 +407,12 @@ public class PreConfProyecto extends JFrame {
 		});
 		cbTituloDeOrganizacion.setBounds(84, 79, 320, 23);
 		contentPane.add(cbTituloDeOrganizacion);
+		
+		JLabel lblFondo = new JLabel("");
+		Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+		lblFondo.setIcon(new ImageIcon(imgFondo));
+		lblFondo.setBounds(0, 0, 494, 529);
+		contentPane.add(lblFondo);
 		
 		//Carga las organizaciones a la lista desplegable
 		if (Integer.parseInt(Principal.lblIDValue.getText()) >= 2) {

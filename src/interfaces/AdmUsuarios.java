@@ -3,6 +3,7 @@ package interfaces;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import general.NonEditableModel;
 
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -27,6 +29,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class AdmUsuarios extends JFrame {
 
@@ -36,13 +39,14 @@ public class AdmUsuarios extends JFrame {
 	private JLabel lblAdministrarUsuarios;
 	private JButton btnEditar;
 	static AdmUsuarios frame;
+	private JLabel lblFondo;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -76,6 +80,7 @@ public class AdmUsuarios extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Cierra la ventana de administración de usuarios y reactiva la ventana principal
@@ -117,12 +122,14 @@ public class AdmUsuarios extends JFrame {
 		tablaUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		lblAdministrarUsuarios = new JLabel("~ Administrar Usuarios ~");
+		lblAdministrarUsuarios.setForeground(Color.WHITE);
 		lblAdministrarUsuarios.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdministrarUsuarios.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblAdministrarUsuarios.setBounds(10, 28, 764, 16);
 		contentPane.add(lblAdministrarUsuarios);
 		
 		btnEditar = new JButton("Editar");
+		btnEditar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Abre la ventana de edición para el usuario seleccionado
@@ -136,6 +143,7 @@ public class AdmUsuarios extends JFrame {
 		contentPane.add(btnEditar);
 		
 		JButton btnEnviarCorreo = new JButton("Enviar Correo");
+		btnEnviarCorreo.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnEnviarCorreo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Abre la ventana para envío de correo al usuario
@@ -145,8 +153,14 @@ public class AdmUsuarios extends JFrame {
 				EnviarCorreo.main(id);
 			}
 		});
-		btnEnviarCorreo.setBounds(126, 402, 106, 23);
+		btnEnviarCorreo.setBounds(126, 402, 115, 23);
 		contentPane.add(btnEnviarCorreo);
+		
+		lblFondo = new JLabel("");
+		Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+		lblFondo.setIcon(new ImageIcon(imgFondo));
+		lblFondo.setBounds(0, 0, 784, 436);
+		contentPane.add(lblFondo);
 		
 		tablaUsuarios.setRowSelectionInterval(0, 0);
 	}

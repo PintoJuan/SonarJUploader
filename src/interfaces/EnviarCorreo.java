@@ -18,9 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
@@ -29,6 +32,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class EnviarCorreo extends JFrame {
 
@@ -46,7 +50,7 @@ public class EnviarCorreo extends JFrame {
 	 */
 	public static void main(String pID) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -81,12 +85,14 @@ public class EnviarCorreo extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblEnviarCorreo = new JLabel("~ Enviar Correo con Gmail ~");
+		lblEnviarCorreo.setForeground(Color.WHITE);
 		lblEnviarCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnviarCorreo.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblEnviarCorreo.setBounds(10, 11, 414, 16);
 		contentPane.add(lblEnviarCorreo);
 		
 		JLabel lblCorreoDestino = new JLabel("Correo Destino:");
+		lblCorreoDestino.setForeground(Color.WHITE);
 		lblCorreoDestino.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCorreoDestino.setBounds(37, 247, 95, 16);
 		contentPane.add(lblCorreoDestino);
@@ -99,6 +105,7 @@ public class EnviarCorreo extends JFrame {
 		contentPane.add(txtCorreoDestino);
 		
 		JButton btnEnviar = new JButton("Enviar");
+		btnEnviar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -149,6 +156,7 @@ public class EnviarCorreo extends JFrame {
 		contentPane.add(btnEnviar);
 		
 		JButton btnCancelar = new JButton("Cerrar");
+		btnCancelar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdmUsuarios.frame.setEnabled(true);
@@ -160,6 +168,7 @@ public class EnviarCorreo extends JFrame {
 		contentPane.add(btnCancelar);
 		
 		JLabel lblCorreoAdmin = new JLabel("Correo Admin:");
+		lblCorreoAdmin.setForeground(Color.WHITE);
 		lblCorreoAdmin.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCorreoAdmin.setBounds(42, 53, 89, 16);
 		contentPane.add(lblCorreoAdmin);
@@ -177,21 +186,25 @@ public class EnviarCorreo extends JFrame {
 		contentPane.add(txtContraseña);
 		
 		JLabel lblContraseña = new JLabel("Contrase\u00F1a:");
+		lblContraseña.setForeground(Color.WHITE);
 		lblContraseña.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblContraseña.setBounds(58, 92, 73, 16);
 		contentPane.add(lblContraseña);
 		
 		JLabel lblServer = new JLabel("Server:");
+		lblServer.setForeground(Color.WHITE);
 		lblServer.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblServer.setBounds(90, 131, 41, 16);
 		contentPane.add(lblServer);
 		
 		JLabel lblPort = new JLabel("Port:");
+		lblPort.setForeground(Color.WHITE);
 		lblPort.setFont(new Font("Rockwell", Font.BOLD, 12));
-		lblPort.setBounds(103, 169, 28, 16);
+		lblPort.setBounds(104, 171, 28, 16);
 		contentPane.add(lblPort);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setForeground(Color.WHITE);
 		lblUsuario.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblUsuario.setBounds(83, 208, 49, 16);
 		contentPane.add(lblUsuario);
@@ -238,6 +251,12 @@ public class EnviarCorreo extends JFrame {
 			
 			correo = rs.getString( "CORREO" );
 			txtCorreoAdmin.setText(correo);
+			
+			JLabel lblFondo = new JLabel("");
+			Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+			lblFondo.setIcon(new ImageIcon(imgFondo));
+			lblFondo.setBounds(0, 0, 434, 316);
+			contentPane.add(lblFondo);
 			
 			conn.close();
 		} catch (SQLException e1) {

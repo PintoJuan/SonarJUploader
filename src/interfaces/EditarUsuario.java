@@ -13,9 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -23,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class EditarUsuario extends JFrame {
 
@@ -36,7 +40,7 @@ public class EditarUsuario extends JFrame {
 	 */
 	public static void main(String pID) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -70,12 +74,14 @@ public class EditarUsuario extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblEditarUsuario = new JLabel("~ Editar Usuario ~");
+		lblEditarUsuario.setForeground(Color.WHITE);
 		lblEditarUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEditarUsuario.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblEditarUsuario.setBounds(10, 25, 414, 16);
 		contentPane.add(lblEditarUsuario);
 		
 		JLabel lblNombreUsuario = new JLabel("Nombre de Usuario:");
+		lblNombreUsuario.setForeground(Color.WHITE);
 		lblNombreUsuario.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblNombreUsuario.setBounds(29, 75, 126, 16);
 		contentPane.add(lblNombreUsuario);
@@ -87,6 +93,7 @@ public class EditarUsuario extends JFrame {
 		contentPane.add(txtNombre);
 		
 		JLabel lblContraseña = new JLabel("Contrase\u00F1a:");
+		lblContraseña.setForeground(Color.WHITE);
 		lblContraseña.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblContraseña.setBounds(75, 114, 80, 16);
 		contentPane.add(lblContraseña);
@@ -99,6 +106,7 @@ public class EditarUsuario extends JFrame {
 		
 		//Edita la información del usuario en la base de datos en base a los datos ingresados
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (txtNombre.getText().isEmpty() == true) {
@@ -174,6 +182,7 @@ public class EditarUsuario extends JFrame {
 		contentPane.add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -196,6 +205,7 @@ public class EditarUsuario extends JFrame {
 		contentPane.add(btnCancelar);
 		
 		JLabel lblCorreo = new JLabel("Correo:");
+		lblCorreo.setForeground(Color.WHITE);
 		lblCorreo.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCorreo.setBounds(102, 153, 53, 16);
 		contentPane.add(lblCorreo);
@@ -222,6 +232,12 @@ public class EditarUsuario extends JFrame {
 			txtNombre.setText(nombre);
 			txtContraseña.setText(contraseña);
 			txtCorreo.setText(correo);
+			
+			JLabel lblFondo = new JLabel("");
+			Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+			lblFondo.setIcon(new ImageIcon(imgFondo));
+			lblFondo.setBounds(0, 0, 434, 224);
+			contentPane.add(lblFondo);
 			
 			
 			conn.close();

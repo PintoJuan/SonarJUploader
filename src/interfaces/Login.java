@@ -14,9 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -24,6 +27,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class Login extends JFrame {
 
@@ -37,7 +41,7 @@ public class Login extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -151,12 +155,14 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblTituloLogin = new JLabel("~ Inicio de Sesi\u00F3n ~");
+		lblTituloLogin.setForeground(Color.WHITE);
 		lblTituloLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTituloLogin.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblTituloLogin.setBounds(10, 38, 464, 16);
 		contentPane.add(lblTituloLogin);
 		
 		JLabel lblNombreUsuario = new JLabel("Nombre de Usuario:");
+		lblNombreUsuario.setForeground(Color.WHITE);
 		lblNombreUsuario.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblNombreUsuario.setBounds(39, 88, 126, 16);
 		contentPane.add(lblNombreUsuario);
@@ -168,6 +174,7 @@ public class Login extends JFrame {
 		contentPane.add(txtNombre);
 		
 		JLabel lblContraseña = new JLabel("Contrase\u00F1a:");
+		lblContraseña.setForeground(Color.WHITE);
 		lblContraseña.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblContraseña.setBounds(85, 127, 80, 16);
 		contentPane.add(lblContraseña);
@@ -179,6 +186,7 @@ public class Login extends JFrame {
 		contentPane.add(txtContraseña);
 		
 		JButton btnIngresar = new JButton("Ingresar");
+		btnIngresar.setFont(new Font("Rockwell", Font.PLAIN, 11));
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -227,20 +235,22 @@ public class Login extends JFrame {
 				
 			}
 		});
-		btnIngresar.setBounds(266, 161, 99, 30);
+		btnIngresar.setBounds(266, 161, 110, 30);
 		contentPane.add(btnIngresar);
 		
 		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.setFont(new Font("Rockwell", Font.PLAIN, 11));
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Cierra el programa
 				System.exit(0);
 			}
 		});
-		btnCerrar.setBounds(266, 193, 99, 30);
+		btnCerrar.setBounds(266, 193, 110, 30);
 		contentPane.add(btnCerrar);
 		
 		JButton btnCrearUsuario = new JButton("Crear Usuario");
+		btnCrearUsuario.setFont(new Font("Rockwell", Font.PLAIN, 11));
 		btnCrearUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Abre la pantalla de creación de usuario
@@ -248,10 +258,11 @@ public class Login extends JFrame {
 				CrearUsuario.main(null);
 			}
 		});
-		btnCrearUsuario.setBounds(157, 162, 99, 28);
+		btnCrearUsuario.setBounds(146, 162, 110, 28);
 		contentPane.add(btnCrearUsuario);
 		
 		JButton btnInvitado = new JButton("Invitado");
+		btnInvitado.setFont(new Font("Rockwell", Font.PLAIN, 11));
 		btnInvitado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Ingresa a la pantalla principal como invitado, sin cuenta de usuario
@@ -262,7 +273,13 @@ public class Login extends JFrame {
 				dispose();
 			}
 		});
-		btnInvitado.setBounds(157, 194, 99, 28);
+		btnInvitado.setBounds(146, 194, 110, 28);
 		contentPane.add(btnInvitado);
+		
+		JLabel lblFondo = new JLabel("");
+		Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+		lblFondo.setIcon(new ImageIcon(imgFondo));
+		lblFondo.setBounds(0, 0, 484, 244);
+		contentPane.add(lblFondo);
 	}
 }

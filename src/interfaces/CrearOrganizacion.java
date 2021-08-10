@@ -13,9 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -25,6 +28,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class CrearOrganizacion extends JFrame {
 
@@ -40,7 +44,7 @@ public class CrearOrganizacion extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -74,12 +78,14 @@ public class CrearOrganizacion extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblCrearOrganizacin = new JLabel("~ Crear Organizaci\u00F3n de Sonar Cloud ~");
+		lblCrearOrganizacin.setForeground(Color.WHITE);
 		lblCrearOrganizacin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCrearOrganizacin.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblCrearOrganizacin.setBounds(10, 11, 414, 24);
 		contentPane.add(lblCrearOrganizacin);
 		
 		JLabel lblTitulo = new JLabel("T\u00EDtulo:");
+		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblTitulo.setBounds(103, 64, 39, 16);
 		contentPane.add(lblTitulo);
@@ -91,6 +97,7 @@ public class CrearOrganizacion extends JFrame {
 		contentPane.add(txtTitulo);
 		
 		JLabel lblDescripcion = new JLabel("Descripci\u00F3n:");
+		lblDescripcion.setForeground(Color.WHITE);
 		lblDescripcion.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblDescripcion.setBounds(65, 96, 77, 16);
 		contentPane.add(lblDescripcion);
@@ -102,6 +109,7 @@ public class CrearOrganizacion extends JFrame {
 		contentPane.add(txtDescripcion);
 		
 		JLabel lblNombreSonar = new JLabel("Nombre Sonar:");
+		lblNombreSonar.setForeground(Color.WHITE);
 		lblNombreSonar.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblNombreSonar.setBounds(53, 128, 89, 16);
 		contentPane.add(lblNombreSonar);
@@ -113,6 +121,7 @@ public class CrearOrganizacion extends JFrame {
 		contentPane.add(txtNombreSonar);
 		
 		JLabel lblToken = new JLabel("Token:");
+		lblToken.setForeground(Color.WHITE);
 		lblToken.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblToken.setBounds(100, 160, 42, 16);
 		contentPane.add(lblToken);
@@ -124,6 +133,7 @@ public class CrearOrganizacion extends JFrame {
 		contentPane.add(txtToken);
 		
 		JLabel lblCarpeta = new JLabel("Carpeta de Proyectos:");
+		lblCarpeta.setForeground(Color.WHITE);
 		lblCarpeta.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCarpeta.setBounds(10, 192, 132, 16);
 		contentPane.add(lblCarpeta);
@@ -136,6 +146,7 @@ public class CrearOrganizacion extends JFrame {
 		
 		//Crea una organización nueva en base a los datos ingresados por el usuario
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (txtTitulo.getText().isEmpty() == true) {
@@ -180,6 +191,7 @@ public class CrearOrganizacion extends JFrame {
 		contentPane.add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdmOrganizaciones.frame.setEnabled(true);
@@ -206,5 +218,11 @@ public class CrearOrganizacion extends JFrame {
 		});
 		btnBuscar.setBounds(353, 190, 43, 23);
 		contentPane.add(btnBuscar);
+		
+		JLabel lblFondo = new JLabel("");
+		Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+		lblFondo.setIcon(new ImageIcon(imgFondo));
+		lblFondo.setBounds(0, 0, 434, 261);
+		contentPane.add(lblFondo);
 	}
 }

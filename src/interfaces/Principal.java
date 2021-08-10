@@ -2,6 +2,7 @@ package interfaces;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -12,6 +13,7 @@ import javax.swing.UIManager;
 
 import org.sqlite.SQLiteDataSource;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -24,6 +26,7 @@ import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.awt.Color;
 
 public class Principal {
 	
@@ -36,7 +39,7 @@ public class Principal {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -114,6 +117,7 @@ public class Principal {
 		frmJuploader.getContentPane().setLayout(null);
 		
 		JButton btnAnalizarProyecto = new JButton("Analizar Proyectos");
+		btnAnalizarProyecto.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnAnalizarProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmJuploader.setEnabled(false);
@@ -121,10 +125,11 @@ public class Principal {
 
 			}
 		});
-		btnAnalizarProyecto.setBounds(175, 187, 239, 23);
+		btnAnalizarProyecto.setBounds(158, 180, 271, 23);
 		frmJuploader.getContentPane().add(btnAnalizarProyecto);
 		
 		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -134,36 +139,40 @@ public class Principal {
 		frmJuploader.getContentPane().add(btnCerrar);
 		
 		JButton btnPreconfigurarProyecto = new JButton("Pre-configurar Proyecto");
+		btnPreconfigurarProyecto.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnPreconfigurarProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmJuploader.setEnabled(false);
 				PreConfProyecto.main(null);
 			}
 		});
-		btnPreconfigurarProyecto.setBounds(175, 153, 239, 23);
+		btnPreconfigurarProyecto.setBounds(158, 146, 271, 23);
 		frmJuploader.getContentPane().add(btnPreconfigurarProyecto);
 		
 		JButton btnAdministrarOrganizaciones = new JButton("Administrar Organizaciones de Sonar Cloud");
+		btnAdministrarOrganizaciones.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnAdministrarOrganizaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmJuploader.setEnabled(false);
 				AdmOrganizaciones.main(null);
 			}
 		});
-		btnAdministrarOrganizaciones.setBounds(175, 119, 239, 23);
+		btnAdministrarOrganizaciones.setBounds(158, 112, 271, 23);
 		frmJuploader.getContentPane().add(btnAdministrarOrganizaciones);
 		
 		JButton btnReportes = new JButton("Visualizar Reportes");
+		btnReportes.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnReportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmJuploader.setEnabled(false);
 				VisualizarReportes.main(null);
 			}
 		});
-		btnReportes.setBounds(175, 221, 239, 23);
+		btnReportes.setBounds(158, 214, 271, 23);
 		frmJuploader.getContentPane().add(btnReportes);
 		
 		JButton btnCerrarSesion = new JButton("Cerrar Sesi\u00F3n");
+		btnCerrarSesion.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Login.main(null);
@@ -174,6 +183,7 @@ public class Principal {
 		frmJuploader.getContentPane().add(btnCerrarSesion);
 		
 		JButton btnBorrarUsuario = new JButton("Borrar Usuario");
+		btnBorrarUsuario.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnBorrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int reply = JOptionPane.showConfirmDialog(null, "¿Desea realmente borrar su usuario?", "Borrar Usuario", JOptionPane.YES_NO_OPTION);
@@ -204,24 +214,28 @@ public class Principal {
 		frmJuploader.getContentPane().add(btnBorrarUsuario);
 		
 		JLabel lblSonarJuploader = new JLabel("~ Sonar JUploader ~");
+		lblSonarJuploader.setForeground(Color.WHITE);
 		lblSonarJuploader.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSonarJuploader.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblSonarJuploader.setBounds(10, 21, 564, 23);
 		frmJuploader.getContentPane().add(lblSonarJuploader);
 		
 		lblUsuarioValue = new JLabel(args[1]);
+		lblUsuarioValue.setForeground(Color.WHITE);
 		lblUsuarioValue.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUsuarioValue.setFont(new Font("Rockwell", Font.PLAIN, 15));
-		lblUsuarioValue.setBounds(294, 78, 200, 23);
+		lblUsuarioValue.setBounds(293, 78, 200, 23);
 		frmJuploader.getContentPane().add(lblUsuarioValue);
 		
 		lblIDValue = new JLabel(args[0]);
+		lblIDValue.setForeground(Color.WHITE);
 		lblIDValue.setHorizontalAlignment(SwingConstants.LEFT);
 		lblIDValue.setFont(new Font("Rockwell", Font.PLAIN, 15));
-		lblIDValue.setBounds(294, 55, 200, 23);
+		lblIDValue.setBounds(293, 55, 200, 23);
 		frmJuploader.getContentPane().add(lblIDValue);
 		
 		JButton btnEditarUsuario = new JButton("Editar Usuario");
+		btnEditarUsuario.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnEditarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmJuploader.setEnabled(false);
@@ -232,26 +246,35 @@ public class Principal {
 		frmJuploader.getContentPane().add(btnEditarUsuario);
 		
 		JLabel lblId = new JLabel("ID:");
+		lblId.setForeground(Color.WHITE);
 		lblId.setHorizontalAlignment(SwingConstants.LEFT);
 		lblId.setFont(new Font("Rockwell", Font.PLAIN, 15));
-		lblId.setBounds(264, 55, 20, 23);
+		lblId.setBounds(263, 55, 20, 23);
 		frmJuploader.getContentPane().add(lblId);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
+		lblUsuario.setForeground(Color.WHITE);
 		lblUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUsuario.setFont(new Font("Rockwell", Font.PLAIN, 15));
-		lblUsuario.setBounds(226, 78, 58, 23);
+		lblUsuario.setBounds(225, 78, 58, 23);
 		frmJuploader.getContentPane().add(lblUsuario);
 		
 		JButton btnAdministrarUsuarios = new JButton("Administrar Usuarios");
+		btnAdministrarUsuarios.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnAdministrarUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmJuploader.setEnabled(false);
 				AdmUsuarios.main(null);
 			}
 		});
-		btnAdministrarUsuarios.setBounds(175, 255, 239, 23);
+		btnAdministrarUsuarios.setBounds(158, 248, 271, 23);
 		frmJuploader.getContentPane().add(btnAdministrarUsuarios);
+		
+		JLabel lblFondo = new JLabel("");
+		Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+		lblFondo.setIcon(new ImageIcon(imgFondo));
+		lblFondo.setBounds(0, 0, 584, 339);
+		frmJuploader.getContentPane().add(lblFondo);
 		
 		if (Integer.valueOf(lblIDValue.getText()) != 1) {
 			btnAdministrarUsuarios.hide();

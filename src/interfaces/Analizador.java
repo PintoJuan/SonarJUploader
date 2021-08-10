@@ -3,6 +3,7 @@ package interfaces;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.sqlite.SQLiteDataSource;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
@@ -39,6 +41,7 @@ import javax.swing.JTextArea;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.JCheckBox;
+import java.awt.Color;
 
 public class Analizador extends JFrame {
 
@@ -52,7 +55,7 @@ public class Analizador extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -87,6 +90,7 @@ public class Analizador extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblOrganizacion = new JLabel("Organizaci\u00F3n");
+		lblOrganizacion.setForeground(Color.WHITE);
 		lblOrganizacion.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblOrganizacion.setBounds(174, 241, 81, 16);
 		contentPane.add(lblOrganizacion);
@@ -98,6 +102,7 @@ public class Analizador extends JFrame {
 		contentPane.add(txtOrganizacion);
 		
 		JLabel lblToken = new JLabel("Token");
+		lblToken.setForeground(Color.WHITE);
 		lblToken.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblToken.setBounds(198, 300, 38, 16);
 		contentPane.add(lblToken);
@@ -109,6 +114,7 @@ public class Analizador extends JFrame {
 		contentPane.add(txtToken);
 		
 		JLabel lblCarpetaProyectos = new JLabel("Carpeta de Proyectos");
+		lblCarpetaProyectos.setForeground(Color.WHITE);
 		lblCarpetaProyectos.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblCarpetaProyectos.setBounds(155, 357, 126, 16);
 		contentPane.add(lblCarpetaProyectos);
@@ -137,11 +143,13 @@ public class Analizador extends JFrame {
 		contentPane.add(btnBuscar);
 		
 		JLabel lblTituloAnalizador = new JLabel("~ Analizar con Sonar Cloud ~");
+		lblTituloAnalizador.setForeground(Color.WHITE);
 		lblTituloAnalizador.setFont(new Font("Rockwell", Font.BOLD, 20));
 		lblTituloAnalizador.setBounds(69, 26, 285, 16);
 		contentPane.add(lblTituloAnalizador);
 		
 		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Cierra la ventana de análisis y habilita la ventana principal
@@ -160,6 +168,7 @@ public class Analizador extends JFrame {
 		contentPane.add(btnCerrar);
 		
 		JLabel lblTituloDeOrganizacion = new JLabel("T\u00EDtulo de Organizaci\u00F3n");
+		lblTituloDeOrganizacion.setForeground(Color.WHITE);
 		lblTituloDeOrganizacion.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblTituloDeOrganizacion.setBounds(143, 68, 138, 16);
 		contentPane.add(lblTituloDeOrganizacion);
@@ -172,6 +181,7 @@ public class Analizador extends JFrame {
 		contentPane.add(txtDescripcion);
 		
 		JLabel lblDescripcion = new JLabel("Descripci\u00F3n");
+		lblDescripcion.setForeground(Color.WHITE);
 		lblDescripcion.setFont(new Font("Rockwell", Font.BOLD, 12));
 		lblDescripcion.setBounds(174, 129, 81, 16);
 		contentPane.add(lblDescripcion);
@@ -208,10 +218,13 @@ public class Analizador extends JFrame {
 		contentPane.add(cbTituloDeOrganizacion);
 		
 		JCheckBox cbxProjectKeyAutomatico = new JCheckBox("ProjectKey Autom\u00E1tico");
-		cbxProjectKeyAutomatico.setBounds(161, 417, 138, 23);
+		cbxProjectKeyAutomatico.setFont(new Font("Rockwell", Font.PLAIN, 12));
+		cbxProjectKeyAutomatico.setForeground(Color.WHITE);
+		cbxProjectKeyAutomatico.setBounds(161, 417, 148, 23);
 		contentPane.add(cbxProjectKeyAutomatico);
 		
 		JButton btnIniciar = new JButton("Iniciar");
+		btnIniciar.setFont(new Font("Rockwell", Font.PLAIN, 12));
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Thread one = new Thread() {
@@ -299,6 +312,12 @@ public class Analizador extends JFrame {
 		});
 		btnIniciar.setBounds(51, 417, 89, 23);
 		contentPane.add(btnIniciar);
+		
+		JLabel lblFondo = new JLabel("");
+		Image imgFondo = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
+		lblFondo.setIcon(new ImageIcon(imgFondo));
+		lblFondo.setBounds(0, 0, 434, 451);
+		contentPane.add(lblFondo);
 		
 		//Carga la lista de organizaciones del usuario, o inhabilita la lista si se ingresó como invitado
 		if (Integer.parseInt(Principal.lblIDValue.getText()) >= 2) {
