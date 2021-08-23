@@ -197,6 +197,9 @@ public class Principal {
 						Statement stmt = conn.createStatement();
 						int rv = stmt.executeUpdate( query );
 						
+						query = "DELETE FROM analisis WHERE ( USUARIOID = '"+Principal.lblIDValue.getText()+"' )";
+						rv = stmt.executeUpdate( query );
+						
 						query = "DELETE FROM usuarios WHERE ( ID = '"+Principal.lblIDValue.getText()+"' )";
 						rv = stmt.executeUpdate( query );
 						
