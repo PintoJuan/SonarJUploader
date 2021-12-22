@@ -52,7 +52,6 @@ public class EditarUsuario extends JFrame {
 					EditarUsuario frame = new EditarUsuario(pID);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
-					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

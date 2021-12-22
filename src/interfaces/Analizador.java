@@ -68,7 +68,6 @@ public class Analizador extends JFrame {
 					Analizador frame = new Analizador();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
-					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -57,7 +57,6 @@ public class AdmOrganizaciones extends JFrame {
 					frame = new AdmOrganizaciones();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
-					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

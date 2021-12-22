@@ -52,7 +52,6 @@ public class CrearUsuario extends JFrame {
 					CrearUsuario frame = new CrearUsuario();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
-					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

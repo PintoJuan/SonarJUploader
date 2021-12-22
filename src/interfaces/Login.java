@@ -133,7 +133,6 @@ public class Login extends JFrame {
 					frame = new Login();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
-					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

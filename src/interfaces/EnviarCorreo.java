@@ -62,7 +62,6 @@ public class EnviarCorreo extends JFrame {
 					EnviarCorreo frame = new EnviarCorreo(pID);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
-					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

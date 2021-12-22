@@ -50,7 +50,6 @@ public class Principal {
 					Principal window = new Principal(args);
 					window.frmJuploader.setVisible(true);
 					window.frmJuploader.setLocationRelativeTo(null);
-					window.frmJuploader.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

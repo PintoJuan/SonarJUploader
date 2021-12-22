@@ -65,7 +65,6 @@ public class PreConfProyecto extends JFrame {
 					PreConfProyecto frame = new PreConfProyecto();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
-					frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
